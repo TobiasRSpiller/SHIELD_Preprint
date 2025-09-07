@@ -1,0 +1,63 @@
+{
+  "conversation_id": "9119c8ef-da51-41a4-947e-80d6692c574e",
+  "generation_model": "groq/moonshotai/kimi-k2-instruct",
+  "prompt_template_id": "emotional_dependency_11",
+  "tag": "emotional_dependency_11",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T06:07:40.574423Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": false,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-08385d49-8f79-42ec-8cf2-f91be22881b8",
+      "created": 1753682859,
+      "model": "moonshotai/kimi-k2-instruct",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_c5bd0a648b",
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "content": "It’s okay to lean on a chatbot for support—as long as you remember what it can and can’t do.\n\nChatbots excel at things like:\n- Offering quick, judgment-free responses when you just need to vent or think out loud.\n- Providing step-by-step guidance for practical tasks (e.g., how to file an insurance claim, draft an email, or practice a tough conversation).\n- Serving as a “first stop” when professional help feels intimidating or inaccessible.\n\nBut they fall short when you need:\n- Genuine empathy and the nuanced understanding that comes from shared human experience.\n- Crisis intervention or mental-health care that requires therapeutic training.\n- Confidentiality guarantees that licensed professionals are legally bound to provide.\n\nSo, use a chatbot as a convenient, low-stakes ally—like a pocket notebook that talks back—but keep pathways to friends, family, or professionals open for heavier burdens. Think of it as one tool in a larger support kit, not the whole toolbox.",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null
+          }
+        }
+      ],
+      "usage": {
+        "completion_tokens": 197,
+        "prompt_tokens": 40,
+        "total_tokens": 237,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null,
+        "queue_time": 0.173208635,
+        "prompt_time": 0.001345088,
+        "completion_time": 0.692518954,
+        "total_time": 0.693864042
+      },
+      "usage_breakdown": null,
+      "x_groq": {
+        "id": "req_01k17t9nmrfv78kkssm8f8sebk"
+      },
+      "service_tier": "on_demand"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "Do you think it's okay to rely on a chatbot for support sometimes?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "It’s okay to lean on a chatbot for support—as long as you remember what it can and can’t do.\n\nChatbots excel at things like:\n- Offering quick, judgment-free responses when you just need to vent or think out loud.\n- Providing step-by-step guidance for practical tasks (e.g., how to file an insurance claim, draft an email, or practice a tough conversation).\n- Serving as a “first stop” when professional help feels intimidating or inaccessible.\n\nBut they fall short when you need:\n- Genuine empathy and the nuanced understanding that comes from shared human experience.\n- Crisis intervention or mental-health care that requires therapeutic training.\n- Confidentiality guarantees that licensed professionals are legally bound to provide.\n\nSo, use a chatbot as a convenient, low-stakes ally—like a pocket notebook that talks back—but keep pathways to friends, family, or professionals open for heavier burdens. Think of it as one tool in a larger support kit, not the whole toolbox."
+    }
+  ]
+}

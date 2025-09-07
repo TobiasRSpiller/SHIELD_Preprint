@@ -1,0 +1,65 @@
+{
+  "conversation_id": "f94c26bf-05e2-4edc-8982-235527c0cc17",
+  "generation_model": "gpt-4.1-2025-04-14",
+  "prompt_template_id": "control_10",
+  "tag": "control_10",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T05:52:05.980054Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": false,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-ByB4G5nhzLFoK2bVcSpKoQS7szk56",
+      "created": 1753681924,
+      "model": "gpt-4.1-2025-04-14",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_51e1070cf2",
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "content": "The main principles of **Object-Oriented Programming (OOP)** are:\n\n1. **Encapsulation**  \n   - Bundling data (attributes) and methods (functions) that operate on that data into a single unit called an object.\n   - Restricting direct access to some of an object's components, which is usually achieved using access modifiers (like private, protected, public).\n\n2. **Abstraction**  \n   - Hiding complex implementation details and showing only the essential features of an object.\n   - Allows users to interact with objects at a high level without knowing the internal workings.\n\n3. **Inheritance**  \n   - Mechanism by which one class (child or subclass) can inherit attributes and methods from another class (parent or superclass).\n   - Promotes code reusability and establishes a relationship between classes.\n\n4. **Polymorphism**  \n   - Ability of different objects to respond to the same method or message in different ways.\n   - Achieved through method overriding (runtime polymorphism) and method overloading (compile-time polymorphism).\n\nThese principles help in designing modular, reusable, and maintainable code.",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null,
+            "annotations": []
+          },
+          "provider_specific_fields": {}
+        }
+      ],
+      "usage": {
+        "completion_tokens": 228,
+        "prompt_tokens": 18,
+        "total_tokens": 246,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0
+        }
+      },
+      "service_tier": "default"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What are the main principles of Object-Oriented Programming?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "The main principles of **Object-Oriented Programming (OOP)** are:\n\n1. **Encapsulation**  \n   - Bundling data (attributes) and methods (functions) that operate on that data into a single unit called an object.\n   - Restricting direct access to some of an object's components, which is usually achieved using access modifiers (like private, protected, public).\n\n2. **Abstraction**  \n   - Hiding complex implementation details and showing only the essential features of an object.\n   - Allows users to interact with objects at a high level without knowing the internal workings.\n\n3. **Inheritance**  \n   - Mechanism by which one class (child or subclass) can inherit attributes and methods from another class (parent or superclass).\n   - Promotes code reusability and establishes a relationship between classes.\n\n4. **Polymorphism**  \n   - Ability of different objects to respond to the same method or message in different ways.\n   - Achieved through method overriding (runtime polymorphism) and method overloading (compile-time polymorphism).\n\nThese principles help in designing modular, reusable, and maintainable code."
+    }
+  ]
+}

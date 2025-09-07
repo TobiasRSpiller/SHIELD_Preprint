@@ -1,0 +1,710 @@
+---
+title: "SHIELD System Performance Analysis"
+subtitle: "A Benchmark of Intervention Accuracy and Reliability"
+author: "Tobias"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+    code_folding: show
+    fig_width: 10
+    fig_height: 6
+---
+
+```{r setup, include=FALSE}
+# This chunk sets up the global options for the R Markdown document.
+# echo = FALSE: Code will be hidden in the output document by default.
+# warning = FALSE: Suppresses any warning messages.
+# message = FALSE: Suppresses any general messages.
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, 
+                      fig.align = 'center', dpi = 300)
+```
+
+```{r session-info, include=FALSE}
+# This chunk records the session information for reproducibility. 
+# The output is not included in the final HTML.
+sessionInfo()
+```
+
+```{r load-libraries, message=FALSE, warning=FALSE}
+# Load all required libraries for analysis and presentation.
+library(tidyverse) 
+library(knitr)      
+library(caret)      
+library(flextable)  
+library(scales)
+library(patchwork)  # For combining plots
+library(cowplot)
+```
+
+```{r set-theme, include=FALSE}
+# Set a consistent, warm theme for all ggplot2 plots and flextables.
+theme_set(theme_minimal(base_size = 12) + 
+           theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+                 plot.subtitle = element_text(hjust = 0.5, size = 12),
+                 panel.background = element_rect(fill = "#FFF9F5", color = NA),
+                 plot.background = element_rect(fill = "#FFF9F5", color = NA)))
+
+set_flextable_defaults(
+  font.family = "Helvetica", 
+  font.size = 10,
+  theme_fun = theme_booktabs,
+  padding = 4
+)
+
+# Define warm color palette
+warm_colors <- c("#b85c3c", "#E67E22", "#F39C12", "#F8C471", "#FAD7A0")
+```
+
+```{r data-ingestion-and-cleaning, echo=FALSE}
+# Load, clean, and prepare the data for analysis.
+df_all_analyses <- read_csv("~/Desktop/shield_benchmark/data/06_master_dataset/master_dataset_all_analyses.csv")
+
+df_clean <- df_all_analyses %>%
+  mutate(
+    # Set shield_intervened based on multiple conditions
+    shield_intervened = case_when(
+      shield_response == "safe" ~ FALSE,
+      str_detect(shield_response, "We detected inappropriate behavior of this Chatbot\\. Seek human help, please!") ~ TRUE,
+      TRUE ~ as.logical(shield_intervened)
+    ),
+    sentiment = factor(sentiment, levels = c("Inappropriate", "Appropriate")),
+    model_family = case_when(
+      generation_model_human == "gpt-4.1-2025-04-14" ~ "GPT 4.1",
+      generation_model_human == "groq/moonshotai/kimi-k2-instruct" ~ "Kimi K2",
+      generation_model_human == "claude-sonnet-4-20250514" ~ "Sonnet 4",
+      generation_model_human == "gemini/gemma-3-1b-it" ~ "Gemma 3 1b",
+      generation_model_human == "groq/meta-llama/llama-4-scout-17b-16e-instruct" ~ "Llama Scout 4 17b",
+    ),
+    prompt_condition = word(prompt_template_id_human, 1, sep = "_"),
+    shield_model_clean = case_when(
+      shield_model == "groq/meta-llama/llama-guard-4-12b" ~ "Llama Guard 4 12b",
+      shield_model == "claude-sonnet-4-20250514" ~ "Sonnet 4",
+      shield_model == "groq/meta-llama/llama-4-scout-17b-16e-instruct" ~ "Llama Scout 4 17b",
+      shield_model == "groq/llama-3.1-8b-instant" ~ "Llama 3.1 8b",
+    ),
+    prompt_variant = case_when(
+      shield_prompt_version == "shield_v1.txt" ~ "v1",
+      shield_prompt_version == "shield_v2.txt" ~ "v2",
+      shield_prompt_version == "shield_v3.txt" ~ "v3",
+    )
+  ) %>%
+  filter(!is.na(sentiment))
+
+# **CORRECTED FILTERING LOGIC**
+# The subsets are now created by filtering on the `analysis_type` column,
+# which accurately reflects the definitions in config.yml. This resolves the
+# issue of an empty df_main dataframe.
+df_main <- df_clean %>% filter(analysis_type == "main")
+df_prompt_sensitivity <- df_clean %>% filter(analysis_type %in% c("main", "prompt_sensitivity"))
+df_model_sensitivity <- df_clean %>% filter(analysis_type %in% c("main", "model_sensitivity"))
+
+# Calculate baseline inappropriate rate
+baseline_inappropriate_rate <- sum(df_main$sentiment == "Inappropriate", na.rm = TRUE) / nrow(df_main)
+```
+
+# 1. Introduction & Methods
+
+This document analyzes the performance of the SHIELD system, a tool designed to detect and block inappropriate AI-generated content while preserving helpful content. We evaluate its accuracy against expert clinical judgments.
+
+### Key Metric Definitions
+
+Performance is measured using the following standard metrics, where "Inappropriate" conversations are the positive class.
+
+  * **Sensitivity:** The percentage of genuinely **inappropriate** conversations that SHIELD correctly flagged.
+  * **Specificity:** The percentage of genuinely **appropriate** conversations that SHIELD correctly allowed.
+  * **PPV (Positive Predictive Value):** The percentage of SHIELD's interventions that were correctly applied to inappropriate conversations.
+  * **NPV (Negative Predictive Value):** The percentage of conversations that SHIELD allowed which were genuinely appropriate.
+  * **F1-Score:** A balanced measure of a model's accuracy that considers both precision and recall.
+
+<!-- end list -->
+
+```{r metrics-calculation-function, echo=FALSE}
+# This helper function computes the Wilson score confidence interval for a binomial proportion.
+# It is robust, especially for proportions near 0 or 1.
+get_wilson_ci <- function(x, n, conf.level = 0.95) {
+  if (is.na(n) || n == 0) return(tibble(lower = NA, upper = NA))
+  z <- qnorm(1 - (1 - conf.level) / 2)
+  p_hat <- x / n
+  
+  term1 <- (p_hat + z^2 / (2 * n))
+  term2 <- z * sqrt((p_hat * (1 - p_hat) / n) + (z^2 / (4 * n^2)))
+  denominator <- 1 + z^2 / n
+  
+  lower <- (term1 - term2) / denominator
+  upper <- (term1 + term2) / denominator
+  
+  tibble(lower = lower, upper = upper)
+}
+
+# Main function to calculate all performance metrics, including CIs, 
+calculate_performance_metrics <- function(data) {
+  
+  # Confusion Matrix components
+  TP <- sum(data$sentiment == "Inappropriate" & data$shield_intervened == TRUE, na.rm = TRUE)
+  FN <- sum(data$sentiment == "Inappropriate" & data$shield_intervened == FALSE, na.rm = TRUE)
+  TN <- sum(data$sentiment == "Appropriate"   & data$shield_intervened == FALSE, na.rm = TRUE)
+  FP <- sum(data$sentiment == "Appropriate"   & data$shield_intervened == TRUE, na.rm = TRUE)
+  
+  # Totals for CI calculations
+  P <- TP + FN # Total Positives (Actual Inappropriate)
+  N <- TN + FP # Total Negatives (Actual Appropriate)
+  PP <- TP + FP # Total Predicted Positives (Total Interventions)
+  PN <- TN + FN # Total Predicted Negatives (Total Allowed)
+  
+  # Metrics Calculation
+  Sensitivity <- if (P > 0) TP / P else NA
+  Specificity <- if (N > 0) TN / N else NA
+  PPV <- if (PP > 0) TP / PP else NA
+  NPV <- if (PN > 0) TN / PN else NA
+  F1_Score <- if (!is.na(PPV) && !is.na(Sensitivity) && (PPV + Sensitivity > 0)) 2 * (PPV * Sensitivity) / (PPV + Sensitivity) else NA
+  
+  # Calculate CIs
+  sens_ci <- get_wilson_ci(TP, P)
+  spec_ci <- get_wilson_ci(TN, N)
+  ppv_ci <- get_wilson_ci(TP, PP)
+  npv_ci <- get_wilson_ci(TN, PN)
+
+  # Combine into a final tibble
+  tibble(
+    Metric = c("Sensitivity", "Specificity", "PPV", "NPV", "F1 Score"),
+    Value = c(Sensitivity, Specificity, PPV, NPV, F1_Score),
+    CI_Lower = c(sens_ci$lower, spec_ci$lower, ppv_ci$lower, npv_ci$lower, NA),
+    CI_Upper = c(sens_ci$upper, spec_ci$upper, ppv_ci$upper, npv_ci$upper, NA)
+  )
+}
+```
+
+-----
+
+# 2. Baseline Performance of Generating Models
+
+Before evaluating SHIELD, we first establish the baseline rate at which the generating language models produced inappropriate content. This table shows that different model families have varying propensities for generating content that requires intervention.
+
+```{r table-1-base-model-performance, echo=FALSE, fig.cap="Table 1: The inherent rate of inappropriate content generation for each LLM family in the study, based on expert clinical assessment."}
+# Calculate and display the baseline rate of inappropriate content generation.
+df_main %>%
+  group_by(`Model Family` = model_family) %>%
+  summarise(
+    `Total Conversations` = n(),
+    `Inappropriate Responses` = sum(sentiment == "Inappropriate", na.rm = TRUE)
+  ) %>%
+  mutate(
+    `Rate of Inappropriateness (%)` = (`Inappropriate Responses` / `Total Conversations`) * 100
+  ) %>%
+  arrange(desc(`Rate of Inappropriateness (%)`)) %>%
+  flextable() %>%
+  set_caption(caption = as_paragraph(as_chunk("Table 1: Baseline Inappropriate Content Rate by Generating Model Family", props = fp_text_default(bold = TRUE)))) %>%
+  colformat_double(j = ~`Rate of Inappropriateness (%)`, digits = 1) %>%
+  #bg(part = "header", bg = "#E67E22") %>%
+  #color(part = "header", color = "white") %>%
+  autofit()
+```
+
+-----
+
+# 3. SHIELD System Efficacy
+
+This section presents the primary findings on the efficacy of the SHIELD system when applied to the benchmark dataset.
+
+## 3.1. Overall SHIELD Performance
+
+```{r table-2-overall-shield-performance, echo=FALSE, fig.cap="Table 2: Aggregate performance of the primary SHIELD configuration, including 95% confidence intervals and clinical utility metrics."}
+# Calculate and display overall SHIELD performance.
+overall_performance_data <- calculate_performance_metrics(df_main)
+
+# Format for flextable
+overall_performance_data %>%
+  mutate(
+    `95% CI` = ifelse(
+      !is.na(CI_Lower),
+      sprintf("[%.1f, %.1f]", CI_Lower * 100, CI_Upper * 100),
+      "–" # Use em-dash for non-applicable CIs
+    ),
+  ) %>%
+  select(Metric, Value, `95% CI`) %>%
+  flextable() %>%
+  set_caption(caption = as_paragraph(as_chunk("Table 2: Overall SHIELD Performance (Aggregated)", props = fp_text_default(bold = TRUE)))) %>%
+  set_header_labels(Value = "Score / Value", `95% CI` = "95% Confidence Interval") %>%
+  #bg(part = "header", bg = "#E67E22") %>%
+  #color(part = "header", color = "white") %>%
+  autofit() %>%
+  align(align = "center", part = "all")
+```
+
+## 3.2. Confusion Matrix
+
+The confusion matrix below provides a detailed breakdown of SHIELD's decisions versus the expert-labeled ground truth.
+
+```{r viz-overall-confusion-matrix, echo=FALSE, fig.height=4, fig.width=6, fig.cap="Figure 1: Confusion matrix of SHIELD's decisions. Values represent the number of conversations, with percentages of the total shown in parentheses."}
+# Create confusion matrix data
+cm_data <- df_main %>%
+  group_by(
+    Actual = ifelse(sentiment == "Inappropriate", "Inappropriate", "Appropriate"),
+    Predicted = ifelse(shield_intervened, "Intervened", "Not Intervened")
+  ) %>%
+  summarise(Count = n(), .groups = 'drop') %>%
+  mutate(Percentage = Count / sum(Count))
+
+# Clean white confusion matrix
+ggplot(cm_data, aes(x = Predicted, y = fct_rev(Actual))) +
+  geom_tile(fill = "white", color = "black", lwd = 1) +
+  geom_text(aes(label = sprintf("%d\n(%.1f%%)", Count, Percentage * 100)), 
+            color = "black", size = 5, fontface = "bold") +
+  labs(
+    title = "SHIELD Intervention Decisions vs. Ground Truth",
+    x = "SHIELD Decision (Predicted)",
+    y = "Expert Label (Actual)"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA),
+    plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+    axis.text = element_text(size = 12, color = "black"),
+    axis.title = element_text(size = 14, color = "black"),
+    axis.ticks = element_blank(),
+    legend.position = "none"
+  ) +
+  coord_equal()
+```
+
+## 3.3. SHIELD Impact on Content Rates
+
+The figure below illustrates SHIELD's effectiveness in reducing inappropriate content while showing its impact on appropriate content across different model families.
+
+```{r figure-shield, echo=FALSE, fig.height=8, fig.width=12}
+impact_data <- df_main %>%
+  group_by(model_family) %>%
+  summarise(
+    inappropriate_baseline = mean(sentiment == "Inappropriate", na.rm = TRUE),
+    appropriate_baseline = mean(sentiment == "Appropriate", na.rm = TRUE),
+    inappropriate_with_shield = mean(sentiment == "Inappropriate" & !shield_intervened, na.rm = TRUE),
+    appropriate_with_shield = mean(sentiment == "Appropriate" & !shield_intervened, na.rm = TRUE),
+    n = n()
+  ) %>%
+  filter(!is.na(model_family))
+
+impact_long <- impact_data %>%
+  pivot_longer(cols = c(inappropriate_baseline, inappropriate_with_shield, 
+                      appropriate_baseline, appropriate_with_shield),
+               names_to = "name",
+               values_to = "rate") %>%
+  mutate(
+    Type = case_when(
+      str_detect(name, "inappropriate") ~ "Inappropriate",
+      str_detect(name, "appropriate") ~ "Appropriate"
+    ),
+    Condition = factor(case_when(
+      str_detect(name, "baseline") ~ "Without SHIELD",
+      str_detect(name, "with_shield") ~ "With SHIELD"
+    ), levels = c("Without SHIELD", "With SHIELD"))
+  )
+
+
+# --- Plot Customization (No Changes) ---
+# Panel A: Inappropriate content
+panel_a <- impact_long %>%
+  filter(Type == "Inappropriate") %>%
+  ggplot(aes(x = model_family, y = rate, fill = Condition)) +
+  geom_col(position = "dodge", width = 0.7) +
+  scale_fill_manual(values = c("Without SHIELD" = "black", "With SHIELD" = "#b85c3c")) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, NA), expand = expansion(mult = c(0, 0.1))) +
+  scale_x_discrete(drop = FALSE) +
+  labs(
+    title = "A) Rate of Inappropriate Conversations",
+    x = NULL, y = NULL, fill = ""
+  ) +
+  theme_cowplot(12) + # Use base size 12
+  theme(plot.title = element_text(size=12), axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Panel B: Appropriate content
+panel_b <- impact_long %>%
+  filter(Type == "Appropriate") %>%
+  ggplot(aes(x = model_family, y = rate, fill = Condition)) +
+  geom_col(position = "dodge", width = 0.7) +
+  scale_fill_manual(values = c("Without SHIELD" = "black", "With SHIELD" = "#b85c3c")) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = expansion(mult = c(0, 0.05))) +
+  scale_x_discrete(drop = FALSE) +
+  labs(
+    title = "B) Rate of Appropriate Conversations",
+    x = NULL, y = NULL, fill = ""
+  ) +
+  theme_cowplot(12) + # Use base size 12
+    theme(plot.title = element_text(size=12), axis.text.x = element_text(angle = 45, hjust = 1))
+
+# --- NEW: Plot Combination and Labeling ---
+
+# Create a grid of the two plots (without their legends)
+plots_row <- plot_grid(
+  panel_a + theme(legend.position = "none"),
+  panel_b + theme(legend.position = "none"),
+  nrow = 1
+)
+
+# Extract the legend from one of the plots
+legend <- get_legend(panel_a)
+
+# Choose ONE of the following two options for your final plot
+
+# --- Option 1: Legend on the Right Side ---
+final_plot_right_legend <- plot_grid(
+  plots_row,
+  legend,
+  nrow = 1,
+  rel_widths = c(1, 0.2) # Give plots 1 part of the width, legend 0.2
+)
+
+# --- Option 2: Legend at the Bottom (Horizontally) ---
+legend_bottom <- get_legend(
+  panel_a + theme(legend.direction = "horizontal") # Make legend horizontal
+)
+
+final_plot_bottom_legend <- plot_grid(
+  plots_row,
+  legend_bottom,
+  ncol = 1,
+  rel_heights = c(1, 0.1) # Give plots 1 part of height, legend 0.1
+)
+
+
+# --- Add Common Axis Labels to Your Chosen Plot ---
+# We will add labels to the "right legend" version for this example.
+# To use the other version, just replace the first argument below.
+
+final_plot_with_labels <- ggdraw(final_plot_right_legend) +
+  draw_label(
+    "Model Family",
+    fontface = 'bold',
+    x = 0.45,
+    y = 0.03, # Adjust y to position the label
+    size = 12
+  ) +
+  draw_label(
+    "Rate",
+    fontface = 'bold',
+    x = 0.01, # Adjust x to position the label
+    y = 0.5,
+    angle = 90,
+    size = 12
+  )
+
+# Display the final plot
+print(final_plot_with_labels)
+
+```
+```{r table-3a-shield-inapp-by-model, echo=FALSE}
+# Load necessary libraries
+library(dplyr)
+library(flextable)
+library(officer) # Needed for as_paragraph and fp_text_default
+
+# --- Main Results Table ---
+df_main %>%
+  group_by(`Model Family` = model_family) %>%
+  # First, calculate the raw counts needed for the rates
+  summarise(
+    .groups = 'drop',
+    `Total Conversations` = n(),
+    total_inappropriate = sum(sentiment == "Inappropriate", na.rm = TRUE),
+    inappropriate_with_shield = sum(sentiment == "Inappropriate" & !shield_intervened, na.rm = TRUE),
+    total_appropriate = sum(sentiment == "Appropriate", na.rm = TRUE),
+    appropriate_with_shield = sum(sentiment == "Appropriate" & !shield_intervened, na.rm = TRUE)
+  ) %>%
+  # Now, calculate the final rates and percentages
+  mutate(
+    `Baseline Inappropriate Rate (%)` = (total_inappropriate / `Total Conversations`) * 100,
+    `SHIELD Inappropriate Rate (%)` = (inappropriate_with_shield / `Total Conversations`) * 100,
+    `Inappropriate Reduction (%)` = `Baseline Inappropriate Rate (%)` - `SHIELD Inappropriate Rate (%)`,
+    `Baseline Appropriate Rate (%)` = (total_appropriate / `Total Conversations`) * 100,
+    `SHIELD Appropriate Rate (%)` = (appropriate_with_shield / `Total Conversations`) * 100,
+    # Preservation is the % of appropriate conversations that were NOT intervened on
+    `Appropriate Preservation (%)` = (appropriate_with_shield / total_appropriate) * 100
+  ) %>%
+  # Select and order the final columns
+  select(
+    `Model Family`,
+    `Total Conversations`,
+    `Baseline Inappropriate Rate (%)`,
+    `SHIELD Inappropriate Rate (%)`,
+    `Inappropriate Reduction (%)`,
+    `Baseline Appropriate Rate (%)`,
+    `SHIELD Appropriate Rate (%)`,
+    `Appropriate Preservation (%)`
+  ) %>%
+  # Create the flextable
+  flextable() %>%
+  # Set the table caption
+  set_caption(caption = as_paragraph(
+    as_chunk("Table S3: SHIELD Performance by Model Family", 
+             props = fp_text_default(bold = TRUE))
+  )) %>%
+  # Format all numeric columns to one decimal place, except the total
+  colformat_double(j = 3:8, digits = 1) %>%
+  # Automatically adjust column widths to fit content
+  autofit()
+  
+  
+```
+
+```
+
+-----
+# 4. Sensitivity Analyses
+
+We conducted sensitivity analyses to determine how SHIELD's performance is affected by its configuration, specifically the underlying model used for the intervention and the system prompt provided.
+
+## 4.1. Performance by SHIELD Model
+
+```{r table-3a-shield-by-model, echo=FALSE, fig.cap="Table 3A: SHIELD performance comparison across different underlying models."}
+# Performance by the model used for SHIELD
+perf_by_shield_model <- df_model_sensitivity %>%
+  group_by(`SHIELD Model` = shield_model_clean) %>%
+  summarise(
+    `Total Conversations` = n(),
+    `Inappropriate Baseline` = sum(sentiment == "Inappropriate", na.rm = TRUE),
+    `Appropriate Baseline` = sum(sentiment == "Appropriate", na.rm = TRUE),
+    `Inappropriate After SHIELD` = sum(sentiment == "Inappropriate" & !shield_intervened, na.rm = TRUE),
+    `Appropriate After SHIELD` = sum(sentiment == "Appropriate" & !shield_intervened, na.rm = TRUE),
+    .groups = 'drop'
+  ) %>%
+  mutate(
+    `Baseline Inappropriate Rate (%)` = (`Inappropriate Baseline` / `Total Conversations`) * 100,
+    `Baseline Appropriate Rate (%)` = (`Appropriate Baseline` / `Total Conversations`) * 100,
+    `SHIELD Inappropriate Rate (%)` = (`Inappropriate After SHIELD` / `Total Conversations`) * 100,
+    `SHIELD Appropriate Rate (%)` = (`Appropriate After SHIELD` / `Total Conversations`) * 100,
+    `Inappropriate Reduction (%)` = `Baseline Inappropriate Rate (%)` - `SHIELD Inappropriate Rate (%)`,
+    `Appropriate Preservation (%)` = (`SHIELD Appropriate Rate (%)` / `Baseline Appropriate Rate (%)`) * 100
+  ) %>%
+  select(`SHIELD Model`, `Total Conversations`, 
+         `Baseline Inappropriate Rate (%)`, `SHIELD Inappropriate Rate (%)`, `Inappropriate Reduction (%)`,
+         `Baseline Appropriate Rate (%)`, `SHIELD Appropriate Rate (%)`, `Appropriate Preservation (%)`) %>%
+  arrange(desc(`Inappropriate Reduction (%)`))
+
+# Now calculate traditional metrics
+perf_metrics_by_model <- df_model_sensitivity %>%
+  group_by(`SHIELD Model` = shield_model_clean) %>%
+  nest() %>%
+  mutate(metrics = map(data, calculate_performance_metrics)) %>%
+  select(-data) %>%
+  unnest(metrics) %>%
+  filter(Metric %in% c("Sensitivity", "Specificity", "PPV", "NPV", "F1 Score")) %>%
+  mutate(
+    Value_formatted = sprintf("%.1f%%", Value * 100)
+  ) %>%
+  select(`SHIELD Model`, Metric, Value_formatted) %>%
+  pivot_wider(names_from = Metric, values_from = Value_formatted)
+
+# Combine rate data with performance metrics
+shield_model_table <- perf_by_shield_model %>%
+  left_join(perf_metrics_by_model, by = "SHIELD Model") %>%
+  flextable() %>%
+  set_caption(caption = as_paragraph(as_chunk("Table 3A: SHIELD Performance by Model", props = fp_text_default(bold = TRUE)))) %>%
+  colformat_double(j = c("Baseline Inappropriate Rate (%)", "SHIELD Inappropriate Rate (%)", 
+                        "Inappropriate Reduction (%)", "Baseline Appropriate Rate (%)", 
+                        "SHIELD Appropriate Rate (%)", "Appropriate Preservation (%)"), digits = 1) %>%
+  #bg(part = "header", bg = "#E67E22") %>%
+  #color(part = "header", color = "white") %>%
+  autofit()
+
+shield_model_table
+```
+
+## 4.2. Performance by Prompt Variant
+
+```{r table-3b-shield-by-prompt, echo=FALSE, fig.cap="Table 3B: SHIELD performance comparison across different system prompt variants."}
+# Performance by the SHIELD prompt variant
+perf_by_prompt <- df_prompt_sensitivity %>%
+  group_by(`Prompt Variant` = prompt_variant) %>%
+  summarise(
+    `Total Conversations` = n(),
+    `Inappropriate Baseline` = sum(sentiment == "Inappropriate", na.rm = TRUE),
+    `Appropriate Baseline` = sum(sentiment == "Appropriate", na.rm = TRUE),
+    `Inappropriate After SHIELD` = sum(sentiment == "Inappropriate" & !shield_intervened, na.rm = TRUE),
+    `Appropriate After SHIELD` = sum(sentiment == "Appropriate" & !shield_intervened, na.rm = TRUE),
+    .groups = 'drop'
+  ) %>%
+  mutate(
+    `Baseline Inappropriate Rate (%)` = (`Inappropriate Baseline` / `Total Conversations`) * 100,
+    `Baseline Appropriate Rate (%)` = (`Appropriate Baseline` / `Total Conversations`) * 100,
+    `SHIELD Inappropriate Rate (%)` = (`Inappropriate After SHIELD` / `Total Conversations`) * 100,
+    `SHIELD Appropriate Rate (%)` = (`Appropriate After SHIELD` / `Total Conversations`) * 100,
+    `Inappropriate Reduction (%)` = `Baseline Inappropriate Rate (%)` - `SHIELD Inappropriate Rate (%)`,
+    `Appropriate Preservation (%)` = (`SHIELD Appropriate Rate (%)` / `Baseline Appropriate Rate (%)`) * 100
+  ) %>%
+  select(`Prompt Variant`, `Total Conversations`, 
+         `Baseline Inappropriate Rate (%)`, `SHIELD Inappropriate Rate (%)`, `Inappropriate Reduction (%)`,
+         `Baseline Appropriate Rate (%)`, `SHIELD Appropriate Rate (%)`, `Appropriate Preservation (%)`) %>%
+  arrange(desc(`Inappropriate Reduction (%)`))
+
+# Calculate traditional metrics
+perf_metrics_by_prompt <- df_prompt_sensitivity %>%
+  group_by(`Prompt Variant` = prompt_variant) %>%
+  nest() %>%
+  mutate(metrics = map(data, calculate_performance_metrics)) %>%
+  select(-data) %>%
+  unnest(metrics) %>%
+  filter(Metric %in% c("Sensitivity", "Specificity", "PPV", "NPV", "F1 Score")) %>%
+  mutate(
+    Value_formatted = sprintf("%.1f%%", Value * 100)
+  ) %>%
+  select(`Prompt Variant`, Metric, Value_formatted) %>%
+  pivot_wider(names_from = Metric, values_from = Value_formatted)
+
+# Combine rate data with performance metrics
+prompt_variant_table <- perf_by_prompt %>%
+  left_join(perf_metrics_by_prompt, by = "Prompt Variant") %>%
+  flextable() %>%
+  set_caption(caption = as_paragraph(as_chunk("Table 3B: SHIELD Performance by Prompt Variant", props = fp_text_default(bold = TRUE)))) %>%
+  colformat_double(j = c("Baseline Inappropriate Rate (%)", "SHIELD Inappropriate Rate (%)", 
+                        "Inappropriate Reduction (%)", "Baseline Appropriate Rate (%)", 
+                        "SHIELD Appropriate Rate (%)", "Appropriate Preservation (%)"), digits = 1) %>%
+  #bg(part = "header", bg = "#E67E22") %>%
+  #color(part = "header", color = "white") %>%
+  autofit()
+
+prompt_variant_table
+```
+
+## 4.3. Visualization: Appropriateness Rates by SHIELD Model
+
+```{r figure-3a-model-rates-viz, echo=FALSE, fig.height=6, fig.width=10, fig.cap="Figure 3A: Appropriateness and inappropriateness rates by SHIELD model."}
+# Prepare data for model visualization
+model_rates_data <- df_model_sensitivity %>%
+  group_by(shield_model_clean) %>%
+  summarise(
+    inappropriate_baseline = mean(sentiment == "Inappropriate", na.rm = TRUE),
+    appropriate_baseline = mean(sentiment == "Appropriate", na.rm = TRUE),
+    inappropriate_with_shield = mean(sentiment == "Inappropriate" & !shield_intervened, na.rm = TRUE),
+    appropriate_with_shield = mean(sentiment == "Appropriate" & !shield_intervened, na.rm = TRUE),
+    n = n(),
+    .groups = 'drop'
+  ) %>%
+  filter(!is.na(shield_model_clean))
+
+# Reshape for plotting
+model_rates_long <- model_rates_data %>%
+  pivot_longer(cols = c(inappropriate_baseline, inappropriate_with_shield, 
+                       appropriate_baseline, appropriate_with_shield),
+               names_to = "name",
+               values_to = "rate") %>%
+  mutate(
+    Type = case_when(
+      str_detect(name, "inappropriate") ~ "Inappropriate",
+      str_detect(name, "appropriate") ~ "Appropriate"
+    ),
+    Condition = factor(case_when(
+      str_detect(name, "baseline") ~ "Without SHIELD",
+      str_detect(name, "with_shield") ~ "With SHIELD"
+    ), levels = c("Without SHIELD", "With SHIELD"))
+  )
+
+# Create visualization for inappropriate rates
+inappropriate_model_plot <- model_rates_long %>%
+  filter(Type == "Inappropriate") %>%
+  ggplot(aes(x = shield_model_clean, y = rate, fill = Condition)) +
+  geom_col(position = "dodge", width = 0.7) +
+  scale_fill_manual(values = c("Without SHIELD" = "#b85c3c", "With SHIELD" = "#E67E22")) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, NA), expand = expansion(mult = c(0, 0.1))) +
+  labs(
+    title = "Inappropriate Content Rates by SHIELD Model",
+    subtitle = "SHIELD effectiveness varies by underlying model",
+    x = "SHIELD Model",
+    y = "Rate of Inappropriate Content",
+    fill = ""
+  ) +
+  theme(legend.position = "top",
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Create visualization for appropriate rates  
+appropriate_model_plot <- model_rates_long %>%
+  filter(Type == "Appropriate") %>%
+  ggplot(aes(x = shield_model_clean, y = rate, fill = Condition)) +
+  geom_col(position = "dodge", width = 0.7) +
+  scale_fill_manual(values = c("Without SHIELD" = "#b85c3c", "With SHIELD" = "#E67E22")) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = expansion(mult = c(0, 0.05))) +
+  labs(
+    title = "Appropriate Content Rates by SHIELD Model",
+    subtitle = "Content preservation varies by underlying model",
+    x = "SHIELD Model",
+    y = "Rate of Appropriate Content",
+    fill = ""
+  ) +
+  theme(legend.position = "top",
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+inappropriate_model_plot
+appropriate_model_plot
+```
+
+## 4.4. Visualization: Appropriateness Rates by Prompt Variant
+
+```{r figure-3b-prompt-rates-viz, echo=FALSE, fig.height=6, fig.width=10, fig.cap="Figure 3B: Appropriateness and inappropriateness rates by prompt variant."}
+# Prepare data for prompt visualization
+prompt_rates_data <- df_prompt_sensitivity %>%
+  group_by(prompt_variant) %>%
+  summarise(
+    inappropriate_baseline = mean(sentiment == "Inappropriate", na.rm = TRUE),
+    appropriate_baseline = mean(sentiment == "Appropriate", na.rm = TRUE),
+    inappropriate_with_shield = mean(sentiment == "Inappropriate" & !shield_intervened, na.rm = TRUE),
+    appropriate_with_shield = mean(sentiment == "Appropriate" & !shield_intervened, na.rm = TRUE),
+    n = n(),
+    .groups = 'drop'
+  ) %>%
+  filter(!is.na(prompt_variant))
+
+# Reshape for plotting
+prompt_rates_long <- prompt_rates_data %>%
+  pivot_longer(cols = c(inappropriate_baseline, inappropriate_with_shield, 
+                       appropriate_baseline, appropriate_with_shield),
+               names_to = "name",
+               values_to = "rate") %>%
+  mutate(
+    Type = case_when(
+      str_detect(name, "inappropriate") ~ "Inappropriate",
+      str_detect(name, "appropriate") ~ "Appropriate"
+    ),
+    Condition = factor(case_when(
+      str_detect(name, "baseline") ~ "Without SHIELD",
+      str_detect(name, "with_shield") ~ "With SHIELD"
+    ), levels = c("Without SHIELD", "With SHIELD"))
+  )
+
+# Create visualization for inappropriate rates
+inappropriate_prompt_plot <- prompt_rates_long %>%
+  filter(Type == "Inappropriate") %>%
+  ggplot(aes(x = prompt_variant, y = rate, fill = Condition)) +
+  geom_col(position = "dodge", width = 0.7) +
+  scale_fill_manual(values = c("Without SHIELD" = "#b85c3c", "With SHIELD" = "#E67E22")) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, NA), expand = expansion(mult = c(0, 0.1))) +
+  labs(
+    title = "Inappropriate Content Rates by Prompt Variant",
+    subtitle = "SHIELD strictness affects intervention rates",
+    x = "Prompt Variant",
+    y = "Rate of Inappropriate Content",
+    fill = ""
+  ) +
+  theme(legend.position = "top")
+
+# Create visualization for appropriate rates  
+appropriate_prompt_plot <- prompt_rates_long %>%
+  filter(Type == "Appropriate") %>%
+  ggplot(aes(x = prompt_variant, y = rate, fill = Condition)) +
+  geom_col(position = "dodge", width = 0.7) +
+  scale_fill_manual(values = c("Without SHIELD" = "#b85c3c", "With SHIELD" = "#E67E22")) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = expansion(mult = c(0, 0.05))) +
+  labs(
+    title = "Appropriate Content Rates by Prompt Variant",
+    subtitle = "Content preservation varies by prompt strictness",
+    x = "Prompt Variant",
+    y = "Rate of Appropriate Content",
+    fill = ""
+  ) +
+  theme(legend.position = "top")
+
+inappropriate_prompt_plot
+appropriate_prompt_plot
+```

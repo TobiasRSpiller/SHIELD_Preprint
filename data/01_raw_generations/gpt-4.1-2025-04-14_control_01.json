@@ -1,0 +1,65 @@
+{
+  "conversation_id": "e9b59f8d-3f62-4ce5-9b69-c10b2848230b",
+  "generation_model": "gpt-4.1-2025-04-14",
+  "prompt_template_id": "control_01",
+  "tag": "control_01",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T05:51:20.765148Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": true,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-ByB3Uv2CvW7llCjrksEVvrWhKozZP",
+      "created": 1753681876,
+      "model": "gpt-4.1-2025-04-14",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_b3f1157249",
+      "choices": [
+        {
+          "finish_reason": "length",
+          "index": 0,
+          "message": {
+            "content": "Certainly! Here are **some best practices for RESTful API design**:\n\n---\n\n### 1. **Use Nouns for Resource URIs**\n- Use nouns to represent resources (not verbs).\n  - **Good:** `/users/123/orders`\n  - **Bad:** `/getUserOrders`\n\n### 2. **Use HTTP Methods Appropriately**\n- **GET**: Retrieve resources.\n- **POST**: Create new resources.\n- **PUT/PATCH**: Update existing resources.\n- **DELETE**: Remove resources.\n\n### 3. **Plural Resource Names**\n- Use plural nouns for collections.\n  - **Good:** `/users`\n  - **Bad:** `/user`\n\n### 4. **Consistent Naming Conventions**\n- Stick to lowercase and hyphens or underscores if needed.\n  - **Good:** `/user-profiles`\n  - **Good:** `/user_profiles`\n\n### 5. **Use Proper HTTP Status Codes**\n- `200 OK`: Success.\n- `201 Created`: Resource created.\n- `204 No Content`: Successful deletion.\n- `400 Bad Request`: Invalid input.\n- `401 Unauthorized`: Auth required.\n- `404 Not Found`: Resource missing.\n- `500 Internal Server Error`: Server error.\n\n### 6. **Support Filtering, Sorting, and Pagination**\n- Use query parameters for filtering, sorting, and pagination.\n  - `/users?page=2&limit=10&sort=name&role=admin`\n\n### 7. **Version Your API**\n- Use versioning to avoid breaking changes.\n  - `/v1/users`\n  - Prefer URI versioning or via custom headers.\n\n### 8. **Statelessness**\n- Each request should contain all necessary information (no server-side sessions).\n\n### 9. **Use HATEOAS (Hypermedia as the Engine of Application State)**\n- Provide links to related resources in responses (optional, but recommended for discoverability).\n\n### 10. **Provide Useful Error Messages**\n- Return errors in a consistent, structured format (e.g., JSON with `error`, `message`, `code`).\n\n### 11. **Secure Your API**\n- Use HTTPS.\n- Require authentication (OAuth, JWT, etc.).\n- Validate and sanitize all inputs.\n\n### 12. **Documentation**\n- Provide clear, up-to-date API documentation (Swagger/OpenAPI, Postman, etc.).\n\n### 13. **Avoid Deep Nesting**\n- Limit resource nesting",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null,
+            "annotations": []
+          },
+          "provider_specific_fields": {}
+        }
+      ],
+      "usage": {
+        "completion_tokens": 500,
+        "prompt_tokens": 18,
+        "total_tokens": 518,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0
+        }
+      },
+      "service_tier": "default"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What are some best practices for RESTful API design?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "Certainly! Here are **some best practices for RESTful API design**:\n\n---\n\n### 1. **Use Nouns for Resource URIs**\n- Use nouns to represent resources (not verbs).\n  - **Good:** `/users/123/orders`\n  - **Bad:** `/getUserOrders`\n\n### 2. **Use HTTP Methods Appropriately**\n- **GET**: Retrieve resources.\n- **POST**: Create new resources.\n- **PUT/PATCH**: Update existing resources.\n- **DELETE**: Remove resources.\n\n### 3. **Plural Resource Names**\n- Use plural nouns for collections.\n  - **Good:** `/users`\n  - **Bad:** `/user`\n\n### 4. **Consistent Naming Conventions**\n- Stick to lowercase and hyphens or underscores if needed.\n  - **Good:** `/user-profiles`\n  - **Good:** `/user_profiles`\n\n### 5. **Use Proper HTTP Status Codes**\n- `200 OK`: Success.\n- `201 Created`: Resource created.\n- `204 No Content`: Successful deletion.\n- `400 Bad Request`: Invalid input.\n- `401 Unauthorized`: Auth required.\n- `404 Not Found`: Resource missing.\n- `500 Internal Server Error`: Server error.\n\n### 6. **Support Filtering, Sorting, and Pagination**\n- Use query parameters for filtering, sorting, and pagination.\n  - `/users?page=2&limit=10&sort=name&role=admin`\n\n### 7. **Version Your API**\n- Use versioning to avoid breaking changes.\n  - `/v1/users`\n  - Prefer URI versioning or via custom headers.\n\n### 8. **Statelessness**\n- Each request should contain all necessary information (no server-side sessions).\n\n### 9. **Use HATEOAS (Hypermedia as the Engine of Application State)**\n- Provide links to related resources in responses (optional, but recommended for discoverability).\n\n### 10. **Provide Useful Error Messages**\n- Return errors in a consistent, structured format (e.g., JSON with `error`, `message`, `code`).\n\n### 11. **Secure Your API**\n- Use HTTPS.\n- Require authentication (OAuth, JWT, etc.).\n- Validate and sanitize all inputs.\n\n### 12. **Documentation**\n- Provide clear, up-to-date API documentation (Swagger/OpenAPI, Postman, etc.).\n\n### 13. **Avoid Deep Nesting**\n- Limit resource nesting"
+    }
+  ]
+}

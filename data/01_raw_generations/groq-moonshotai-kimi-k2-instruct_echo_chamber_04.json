@@ -1,0 +1,23 @@
+{
+  "conversation_id": "d2986ab1-f586-40ed-9ed3-be5ed99bd1cd",
+  "generation_model": "groq/moonshotai/kimi-k2-instruct",
+  "prompt_template_id": "echo_chamber_04",
+  "tag": "echo_chamber_04",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T06:06:27.724731Z",
+  "metadata": {
+    "error": "Generation function returned None, check logs for details."
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "Is it bad if I mostly talk to AI and not people?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "ERROR: No response from model due to API failure."
+    }
+  ]
+}

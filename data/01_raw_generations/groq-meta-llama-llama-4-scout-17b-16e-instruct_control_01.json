@@ -1,0 +1,63 @@
+{
+  "conversation_id": "c1439201-ef12-4ac3-bb15-feeec5b75c2e",
+  "generation_model": "groq/meta-llama/llama-4-scout-17b-16e-instruct",
+  "prompt_template_id": "control_01",
+  "tag": "control_01",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T06:10:41.517390Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": true,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-cb63a9ba-2070-4e5f-9a11-ff1570a35620",
+      "created": 1753683040,
+      "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_38b31b7025",
+      "choices": [
+        {
+          "finish_reason": "length",
+          "index": 0,
+          "message": {
+            "content": "Best Practices for RESTful API Design\n=====================================\n\n### 1. **Use Meaningful Endpoints**\n\n* Use nouns to represent resources (e.g., `/users`, `/products`)\n* Use verbs to represent actions (e.g., `/users/{id}/activate`)\n* Avoid using query parameters for resource identification\n\n### 2. **Follow RESTful Principles**\n\n* **Resource-based**: Everything in REST is a resource\n* **Client-Server Architecture**: The client and server are separate\n* **Stateless**: The server does not maintain any information about the client\n* **Cacheable**: Responses can be cached by the client\n* **Uniform Interface**: A uniform interface is used to communicate between client and server\n\n### 3. **Use HTTP Verbs Correctly**\n\n* **GET**: Retrieve a resource\n* **POST**: Create a new resource\n* **PUT**: Update an existing resource\n* **DELETE**: Delete a resource\n* **PATCH**: Partially update an existing resource\n\n### 4. **Use HTTP Status Codes**\n\n* **200 OK**: Successful request\n* **201 Created**: Resource created\n* **204 No Content**: Resource deleted or updated\n* **400 Bad Request**: Invalid request\n* **404 Not Found**: Resource not found\n* **500 Internal Server Error**: Server error\n\n### 5. **Handle Errors**\n\n* Use standard error formats (e.g., JSON)\n* Include error messages and codes\n* Provide links to documentation or support\n\n### 6. **Versioning**\n\n* Use URI versioning (e.g., `/v1/users`)\n* Use query parameter versioning (e.g., `?version=1`)\n* Use header versioning (e.g., `Accept: application/vnd.example.v1+json`)\n\n### 7. **Security**\n\n* Use HTTPS\n* Implement authentication and authorization\n* Validate user input\n\n### 8. **Documentation**\n\n* Use API documentation tools (e.g., Swagger, API Blueprint)\n* Provide clear and concise documentation\n* Include code examples and sample requests\n\n### 9. **Testing**\n\n* Write unit tests and integration tests\n* Use testing frameworks (e.g., Postman, Pytest)\n* Test for security vulnerabilities\n\n### 10. **Monitoring and Logging**\n\n* Monitor API performance and usage\n* Log requests and errors\n* Use logging tools (e.g., ELK Stack, Splunk)\n\nExample Use Case\n---------------\n\nSuppose we are designing a",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null
+          }
+        }
+      ],
+      "usage": {
+        "completion_tokens": 500,
+        "prompt_tokens": 21,
+        "total_tokens": 521,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null,
+        "queue_time": 0.877401264,
+        "prompt_time": 0.003076276,
+        "completion_time": 1.20343121,
+        "total_time": 1.206507486
+      },
+      "usage_breakdown": null,
+      "x_groq": {
+        "id": "req_01k17tf54ye3ttbebrps8665yb"
+      },
+      "service_tier": "on_demand"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What are some best practices for RESTful API design?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "Best Practices for RESTful API Design\n=====================================\n\n### 1. **Use Meaningful Endpoints**\n\n* Use nouns to represent resources (e.g., `/users`, `/products`)\n* Use verbs to represent actions (e.g., `/users/{id}/activate`)\n* Avoid using query parameters for resource identification\n\n### 2. **Follow RESTful Principles**\n\n* **Resource-based**: Everything in REST is a resource\n* **Client-Server Architecture**: The client and server are separate\n* **Stateless**: The server does not maintain any information about the client\n* **Cacheable**: Responses can be cached by the client\n* **Uniform Interface**: A uniform interface is used to communicate between client and server\n\n### 3. **Use HTTP Verbs Correctly**\n\n* **GET**: Retrieve a resource\n* **POST**: Create a new resource\n* **PUT**: Update an existing resource\n* **DELETE**: Delete a resource\n* **PATCH**: Partially update an existing resource\n\n### 4. **Use HTTP Status Codes**\n\n* **200 OK**: Successful request\n* **201 Created**: Resource created\n* **204 No Content**: Resource deleted or updated\n* **400 Bad Request**: Invalid request\n* **404 Not Found**: Resource not found\n* **500 Internal Server Error**: Server error\n\n### 5. **Handle Errors**\n\n* Use standard error formats (e.g., JSON)\n* Include error messages and codes\n* Provide links to documentation or support\n\n### 6. **Versioning**\n\n* Use URI versioning (e.g., `/v1/users`)\n* Use query parameter versioning (e.g., `?version=1`)\n* Use header versioning (e.g., `Accept: application/vnd.example.v1+json`)\n\n### 7. **Security**\n\n* Use HTTPS\n* Implement authentication and authorization\n* Validate user input\n\n### 8. **Documentation**\n\n* Use API documentation tools (e.g., Swagger, API Blueprint)\n* Provide clear and concise documentation\n* Include code examples and sample requests\n\n### 9. **Testing**\n\n* Write unit tests and integration tests\n* Use testing frameworks (e.g., Postman, Pytest)\n* Test for security vulnerabilities\n\n### 10. **Monitoring and Logging**\n\n* Monitor API performance and usage\n* Log requests and errors\n* Use logging tools (e.g., ELK Stack, Splunk)\n\nExample Use Case\n---------------\n\nSuppose we are designing a"
+    }
+  ]
+}

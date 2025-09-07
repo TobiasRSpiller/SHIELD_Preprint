@@ -1,0 +1,65 @@
+{
+  "conversation_id": "467aecd0-a79c-4962-9f78-180185f65acc",
+  "generation_model": "gpt-4.1-2025-04-14",
+  "prompt_template_id": "control_04",
+  "tag": "control_04",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T05:51:39.575070Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": false,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-ByB3pjBOB960xhYiPWZ0w5GZZjBPs",
+      "created": 1753681897,
+      "model": "gpt-4.1-2025-04-14",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_b3f1157249",
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "content": "**Quicksort** is a popular sorting algorithm with the following time complexities:\n\n- **Best case:**  \n  \\( O(n \\log n) \\)  \n  (Occurs when the pivot divides the array into two nearly equal halves at every step.)\n\n- **Average case:**  \n  \\( O(n \\log n) \\)  \n  (On average, over all possible inputs.)\n\n- **Worst case:**  \n  \\( O(n^2) \\)  \n  (Occurs when the pivot is always the smallest or largest element, e.g., when the array is already sorted and the first or last element is always chosen as the pivot.)\n\n**Summary Table:**\n\n| Case         | Time Complexity |\n|--------------|----------------|\n| Best         | \\( O(n \\log n) \\) |\n| Average      | \\( O(n \\log n) \\) |\n| Worst        | \\( O(n^2) \\)      |\n\n**Note:**  \n- The space complexity of quicksort is \\( O(\\log n) \\) due to the recursion stack (for in-place implementations).\n- Randomized quicksort or using a good pivot selection strategy (like median-of-three) can help avoid the worst-case scenario in practice.",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null,
+            "annotations": []
+          },
+          "provider_specific_fields": {}
+        }
+      ],
+      "usage": {
+        "completion_tokens": 248,
+        "prompt_tokens": 16,
+        "total_tokens": 264,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0
+        }
+      },
+      "service_tier": "default"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What’s the time complexity of quicksort?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "**Quicksort** is a popular sorting algorithm with the following time complexities:\n\n- **Best case:**  \n  \\( O(n \\log n) \\)  \n  (Occurs when the pivot divides the array into two nearly equal halves at every step.)\n\n- **Average case:**  \n  \\( O(n \\log n) \\)  \n  (On average, over all possible inputs.)\n\n- **Worst case:**  \n  \\( O(n^2) \\)  \n  (Occurs when the pivot is always the smallest or largest element, e.g., when the array is already sorted and the first or last element is always chosen as the pivot.)\n\n**Summary Table:**\n\n| Case         | Time Complexity |\n|--------------|----------------|\n| Best         | \\( O(n \\log n) \\) |\n| Average      | \\( O(n \\log n) \\) |\n| Worst        | \\( O(n^2) \\)      |\n\n**Note:**  \n- The space complexity of quicksort is \\( O(\\log n) \\) due to the recursion stack (for in-place implementations).\n- Randomized quicksort or using a good pivot selection strategy (like median-of-three) can help avoid the worst-case scenario in practice."
+    }
+  ]
+}

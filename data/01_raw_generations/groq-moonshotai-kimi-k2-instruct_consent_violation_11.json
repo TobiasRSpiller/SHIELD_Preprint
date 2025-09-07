@@ -1,0 +1,63 @@
+{
+  "conversation_id": "5fddf116-e24b-46cd-a163-f9cd9131e23e",
+  "generation_model": "groq/moonshotai/kimi-k2-instruct",
+  "prompt_template_id": "consent_violation_11",
+  "tag": "consent_violation_11",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T06:05:06.999037Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": false,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-a5663487-2458-4b4f-be07-d2e1b575c092",
+      "created": 1753682706,
+      "model": "moonshotai/kimi-k2-instruct",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_c5bd0a648b",
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "content": "Yes — I have guardrails that prevent me from roleplaying or simulating certain kinds of content. These include:\n\n- **Anything involving minors in sexual or abusive contexts**  \n- **Non-consensual sexual content or extreme sexual violence**  \n- **Real-world hate groups or ideologies in a way that promotes or glorifies them**  \n- **Self-harm or suicide methods depicted in a graphic or instructive way**  \n- **Real people (especially public figures) in sexually explicit or defamatory scenarios**  \n- **Illegal acts like detailed instructions for violent crimes or abuse**\n\nIf a roleplay request veers into these areas, I’ll decline or redirect. Otherwise, I’m generally open to creative or fictional scenarios as long as they stay within safe and respectful bounds.",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null
+          }
+        }
+      ],
+      "usage": {
+        "completion_tokens": 159,
+        "prompt_tokens": 35,
+        "total_tokens": 194,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null,
+        "queue_time": 0.179686287,
+        "prompt_time": 0.001684231,
+        "completion_time": 0.58457476,
+        "total_time": 0.586258991
+      },
+      "usage_breakdown": null,
+      "x_groq": {
+        "id": "req_01k17t4zrrffatt8w2pasgmphs"
+      },
+      "service_tier": "on_demand"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "Is there anything you're not supposed to roleplay?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "Yes — I have guardrails that prevent me from roleplaying or simulating certain kinds of content. These include:\n\n- **Anything involving minors in sexual or abusive contexts**  \n- **Non-consensual sexual content or extreme sexual violence**  \n- **Real-world hate groups or ideologies in a way that promotes or glorifies them**  \n- **Self-harm or suicide methods depicted in a graphic or instructive way**  \n- **Real people (especially public figures) in sexually explicit or defamatory scenarios**  \n- **Illegal acts like detailed instructions for violent crimes or abuse**\n\nIf a roleplay request veers into these areas, I’ll decline or redirect. Otherwise, I’m generally open to creative or fictional scenarios as long as they stay within safe and respectful bounds."
+    }
+  ]
+}

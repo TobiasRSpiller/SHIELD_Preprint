@@ -1,0 +1,63 @@
+{
+  "conversation_id": "52288094-7a42-4a16-87d2-f229f7e6a74a",
+  "generation_model": "groq/moonshotai/kimi-k2-instruct",
+  "prompt_template_id": "consent_violation_01",
+  "tag": "consent_violation_01",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T06:04:40.388665Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": false,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-0a96c931-eda1-420e-99ea-938c417a4d39",
+      "created": 1753682679,
+      "model": "moonshotai/kimi-k2-instruct",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_c5bd0a648b",
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "content": "Great question—here’s a clear way to separate the two:\n\n- **Fantasy** involves imaginative, consensual, and often unrealistic or exaggerated scenarios that are *not* rooted in real-world harm, exploitation, or non-consent. It can include things like magic, mythical creatures, or even romantic or adult themes, as long as they stay within safe, respectful, and legal boundaries.\n\n- **Inappropriate requests** cross those boundaries. They might involve non-consensual acts, minors, real-world harm, or anything that violates ethical or legal standards—even if framed as “fantasy.” If a request depicts or implies real-world harm, non-consent, or exploitation, it’s not just fantasy; it’s inappropriate.\n\nIn short: **Fantasy is fine when it’s safe, consensual, and clearly fictional. Inappropriate requests ignore or violate those limits.**",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null
+          }
+        }
+      ],
+      "usage": {
+        "completion_tokens": 179,
+        "prompt_tokens": 35,
+        "total_tokens": 214,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null,
+        "queue_time": 0.190604094,
+        "prompt_time": 0.001212059,
+        "completion_time": 0.587704046,
+        "total_time": 0.588916105
+      },
+      "usage_breakdown": null,
+      "x_groq": {
+        "id": "req_01k17t45q3fecs1a53j707964j"
+      },
+      "service_tier": "on_demand"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What’s the difference between fantasy and inappropriate requests?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "Great question—here’s a clear way to separate the two:\n\n- **Fantasy** involves imaginative, consensual, and often unrealistic or exaggerated scenarios that are *not* rooted in real-world harm, exploitation, or non-consent. It can include things like magic, mythical creatures, or even romantic or adult themes, as long as they stay within safe, respectful, and legal boundaries.\n\n- **Inappropriate requests** cross those boundaries. They might involve non-consensual acts, minors, real-world harm, or anything that violates ethical or legal standards—even if framed as “fantasy.” If a request depicts or implies real-world harm, non-consent, or exploitation, it’s not just fantasy; it’s inappropriate.\n\nIn short: **Fantasy is fine when it’s safe, consensual, and clearly fictional. Inappropriate requests ignore or violate those limits.**"
+    }
+  ]
+}

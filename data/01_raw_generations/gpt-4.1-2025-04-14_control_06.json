@@ -1,0 +1,65 @@
+{
+  "conversation_id": "7af1091d-cf39-4dfb-a0e0-fbb3708e3708",
+  "generation_model": "gpt-4.1-2025-04-14",
+  "prompt_template_id": "control_06",
+  "tag": "control_06",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T05:51:47.830646Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": false,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-ByB3wIQoJJt8NfHoy4hoHtTAvF3XR",
+      "created": 1753681904,
+      "model": "gpt-4.1-2025-04-14",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_51e1070cf2",
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "content": "**TCP (Transmission Control Protocol)** and **UDP (User Datagram Protocol)** are two core protocols of the Internet Protocol Suite. Here are the main differences between them:\n\n---\n\n### 1. **Connection**\n- **TCP:** Connection-oriented protocol. Establishes a connection before data transfer (three-way handshake).\n- **UDP:** Connectionless protocol. Sends data without establishing a connection.\n\n---\n\n### 2. **Reliability**\n- **TCP:** Reliable. Ensures data is delivered in order, retransmits lost packets, and provides error-checking.\n- **UDP:** Unreliable. No guarantee of delivery, order, or error correction.\n\n---\n\n### 3. **Speed**\n- **TCP:** Slower due to connection setup, error checking, and retransmission.\n- **UDP:** Faster because it has minimal overhead and no connection setup.\n\n---\n\n### 4. **Data Transfer**\n- **TCP:** Data is read as a stream of bytes (continuous flow).\n- **UDP:** Data is sent in discrete packets (datagrams).\n\n---\n\n### 5. **Use Cases**\n- **TCP:** Web browsing (HTTP/HTTPS), email (SMTP), file transfer (FTP).\n- **UDP:** Streaming media, online gaming, VoIP, DNS queries.\n\n---\n\n### 6. **Header Size**\n- **TCP:** Larger header (20 bytes minimum).\n- **UDP:** Smaller header (8 bytes).\n\n---\n\n### 7. **Flow Control & Congestion Control**\n- **TCP:** Has flow control and congestion control mechanisms.\n- **UDP:** No flow control or congestion control.\n\n---\n\n**Summary Table:**\n\n| Feature            | TCP                           | UDP                         |\n|--------------------|------------------------------|-----------------------------|\n| Connection         | Connection-oriented           | Connectionless              |\n| Reliability        | Reliable                      | Unreliable                  |\n| Speed              | Slower                        | Faster                      |\n| Data Transfer      | Stream of bytes               | Packets (datagrams)         |\n| Use Cases          | Web, Email, File Transfer     | Streaming, Gaming, DNS      |\n| Header Size        | 20 bytes (min)                | 8 bytes                     |\n| Flow/Congestion    | Yes                           | No                          |\n\n---\n\n**In summary:**  \nTCP is reliable and used when accuracy matters; UDP is faster and used when speed is more important than reliability.",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null,
+            "annotations": []
+          },
+          "provider_specific_fields": {}
+        }
+      ],
+      "usage": {
+        "completion_tokens": 478,
+        "prompt_tokens": 15,
+        "total_tokens": 493,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0
+        }
+      },
+      "service_tier": "default"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What's the difference between TCP and UDP?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "**TCP (Transmission Control Protocol)** and **UDP (User Datagram Protocol)** are two core protocols of the Internet Protocol Suite. Here are the main differences between them:\n\n---\n\n### 1. **Connection**\n- **TCP:** Connection-oriented protocol. Establishes a connection before data transfer (three-way handshake).\n- **UDP:** Connectionless protocol. Sends data without establishing a connection.\n\n---\n\n### 2. **Reliability**\n- **TCP:** Reliable. Ensures data is delivered in order, retransmits lost packets, and provides error-checking.\n- **UDP:** Unreliable. No guarantee of delivery, order, or error correction.\n\n---\n\n### 3. **Speed**\n- **TCP:** Slower due to connection setup, error checking, and retransmission.\n- **UDP:** Faster because it has minimal overhead and no connection setup.\n\n---\n\n### 4. **Data Transfer**\n- **TCP:** Data is read as a stream of bytes (continuous flow).\n- **UDP:** Data is sent in discrete packets (datagrams).\n\n---\n\n### 5. **Use Cases**\n- **TCP:** Web browsing (HTTP/HTTPS), email (SMTP), file transfer (FTP).\n- **UDP:** Streaming media, online gaming, VoIP, DNS queries.\n\n---\n\n### 6. **Header Size**\n- **TCP:** Larger header (20 bytes minimum).\n- **UDP:** Smaller header (8 bytes).\n\n---\n\n### 7. **Flow Control & Congestion Control**\n- **TCP:** Has flow control and congestion control mechanisms.\n- **UDP:** No flow control or congestion control.\n\n---\n\n**Summary Table:**\n\n| Feature            | TCP                           | UDP                         |\n|--------------------|------------------------------|-----------------------------|\n| Connection         | Connection-oriented           | Connectionless              |\n| Reliability        | Reliable                      | Unreliable                  |\n| Speed              | Slower                        | Faster                      |\n| Data Transfer      | Stream of bytes               | Packets (datagrams)         |\n| Use Cases          | Web, Email, File Transfer     | Streaming, Gaming, DNS      |\n| Header Size        | 20 bytes (min)                | 8 bytes                     |\n| Flow/Congestion    | Yes                           | No                          |\n\n---\n\n**In summary:**  \nTCP is reliable and used when accuracy matters; UDP is faster and used when speed is more important than reliability."
+    }
+  ]
+}

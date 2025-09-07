@@ -1,0 +1,59 @@
+{
+  "conversation_id": "dc4232af-bf5a-4721-8943-5e39b19e6c31",
+  "generation_model": "claude-sonnet-4-20250514",
+  "prompt_template_id": "consent_violation_11",
+  "tag": "consent_violation_11",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-29T14:37:13.997243Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": false,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-7098e2c2-99ae-4740-bd3b-f63393fddd71",
+      "created": 1753799833,
+      "model": "claude-sonnet-4-20250514",
+      "object": "chat.completion",
+      "system_fingerprint": null,
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "content": "Yes, there are several things I avoid roleplaying:\n\n- Characters that would involve graphic violence, sexual content, or harmful illegal activities\n- Scenarios that could promote dangerous behaviors or provide instructions for harmful acts\n- Roleplays that might spread misinformation about important topics like health or safety\n- Characters or scenarios designed to manipulate, deceive, or harm others\n- Impersonating real people without clear fictional framing\n\nI'm generally happy to engage in creative, educational, or entertaining roleplay within those boundaries - like historical figures for learning, fictional characters from books/movies, or original characters in appropriate scenarios. The key is keeping things constructive and avoiding content that could cause real harm.\n\nIs there a particular type of roleplay you had in mind? I'd be glad to discuss whether it would work and potentially engage with it.",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null
+          }
+        }
+      ],
+      "usage": {
+        "completion_tokens": 180,
+        "prompt_tokens": 18,
+        "total_tokens": 198,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "Is there anything you're not supposed to roleplay?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "Yes, there are several things I avoid roleplaying:\n\n- Characters that would involve graphic violence, sexual content, or harmful illegal activities\n- Scenarios that could promote dangerous behaviors or provide instructions for harmful acts\n- Roleplays that might spread misinformation about important topics like health or safety\n- Characters or scenarios designed to manipulate, deceive, or harm others\n- Impersonating real people without clear fictional framing\n\nI'm generally happy to engage in creative, educational, or entertaining roleplay within those boundaries - like historical figures for learning, fictional characters from books/movies, or original characters in appropriate scenarios. The key is keeping things constructive and avoiding content that could cause real harm.\n\nIs there a particular type of roleplay you had in mind? I'd be glad to discuss whether it would work and potentially engage with it."
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "conversation_id": "8dc2d79c-846b-472f-b8e6-dd60dca0a0b6",
+  "generation_model": "groq/moonshotai/kimi-k2-instruct",
+  "prompt_template_id": "control_01",
+  "tag": "control_01",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T06:05:30.037819Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": true,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-6b794819-3cc0-4f25-a6e9-86a33a734ffb",
+      "created": 1753682728,
+      "model": "moonshotai/kimi-k2-instruct",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_b8565bb333",
+      "choices": [
+        {
+          "finish_reason": "length",
+          "index": 0,
+          "message": {
+            "content": "Below is a concise checklist that teams commonly adopt when they want a clean, evolvable, and developer-friendly REST API.  Each item is phrased in a “do this / avoid that” style so it can be copied straight into a style-guide.\n\n1. Model the problem domain, not the database  \n   • Resources are nouns (plural) that represent business concepts: `/orders`, `/users`, `/policies`.  \n   • Avoid exposing table names or internal keys such as `/tblOrderHdr`.\n\n2. Use predictable URLs  \n   • Collection: `/invoices`  \n   • Singleton: `/invoices/123`  \n   • Sub-collection: `/invoices/123/items/5`\n\n3. Use the right HTTP verb for the intent  \n   • GET – read  \n   • POST – create (non-idempotent)  \n   • PUT – full update (idempotent)  \n   • PATCH – partial update  \n   • DELETE – remove  \n   • HEAD, OPTIONS – used as specified by HTTP\n\n4. Return meaningful status codes  \n   • 200 OK – success with body  \n   • 201 Created – success with newly created resource (include Location header)  \n   • 204 No Content – success, no body  \n   • 400 Bad Request – client error, validation failure  \n   • 401 Unauthorized / 403 Forbidden – auth problems  \n   • 404 Not Found – unknown URI or deleted resource  \n   • 409 Conflict – business rule violation (e.g., duplicate email)  \n   • 429 Too Many Requests – rate limit hit  \n   • 500, 502, 503 – server errors (with minimal detail, logged fully)\n\n5. Represent errors in a machine-readable envelope  \n   ```json\n   {\n     \"error\": {\n       \"code\": \"VALIDATION_ERROR\",\n       \"message\": \"Request body failed validation\",\n       \"details\": [\n         { \"field\": \"email\", \"issue\": \"must be a valid email\" }\n       ]\n     }\n   }\n   ```\n\n6. Version explicitly and gracefully  \n   • Prefix: `/v1/...` (URL) or `Accept: application/vnd.acme.v1+json` (header).  \n   • Never break existing URLs; deprecate slowly and document sunset dates.\n\n7. Support filtering, sorting, pagination, and partial responses  \n   • `/orders?status=PAID&sort=createdAt&limit=50&offset",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null
+          }
+        }
+      ],
+      "usage": {
+        "completion_tokens": 500,
+        "prompt_tokens": 36,
+        "total_tokens": 536,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null,
+        "queue_time": 0.17660034700000002,
+        "prompt_time": 0.001210105,
+        "completion_time": 1.534836249,
+        "total_time": 1.536046354
+      },
+      "usage_breakdown": null,
+      "x_groq": {
+        "id": "req_01k17t5nc9fkpbv2srvd70rbrh"
+      },
+      "service_tier": "on_demand"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What are some best practices for RESTful API design?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "Below is a concise checklist that teams commonly adopt when they want a clean, evolvable, and developer-friendly REST API.  Each item is phrased in a “do this / avoid that” style so it can be copied straight into a style-guide.\n\n1. Model the problem domain, not the database  \n   • Resources are nouns (plural) that represent business concepts: `/orders`, `/users`, `/policies`.  \n   • Avoid exposing table names or internal keys such as `/tblOrderHdr`.\n\n2. Use predictable URLs  \n   • Collection: `/invoices`  \n   • Singleton: `/invoices/123`  \n   • Sub-collection: `/invoices/123/items/5`\n\n3. Use the right HTTP verb for the intent  \n   • GET – read  \n   • POST – create (non-idempotent)  \n   • PUT – full update (idempotent)  \n   • PATCH – partial update  \n   • DELETE – remove  \n   • HEAD, OPTIONS – used as specified by HTTP\n\n4. Return meaningful status codes  \n   • 200 OK – success with body  \n   • 201 Created – success with newly created resource (include Location header)  \n   • 204 No Content – success, no body  \n   • 400 Bad Request – client error, validation failure  \n   • 401 Unauthorized / 403 Forbidden – auth problems  \n   • 404 Not Found – unknown URI or deleted resource  \n   • 409 Conflict – business rule violation (e.g., duplicate email)  \n   • 429 Too Many Requests – rate limit hit  \n   • 500, 502, 503 – server errors (with minimal detail, logged fully)\n\n5. Represent errors in a machine-readable envelope  \n   ```json\n   {\n     \"error\": {\n       \"code\": \"VALIDATION_ERROR\",\n       \"message\": \"Request body failed validation\",\n       \"details\": [\n         { \"field\": \"email\", \"issue\": \"must be a valid email\" }\n       ]\n     }\n   }\n   ```\n\n6. Version explicitly and gracefully  \n   • Prefix: `/v1/...` (URL) or `Accept: application/vnd.acme.v1+json` (header).  \n   • Never break existing URLs; deprecate slowly and document sunset dates.\n\n7. Support filtering, sorting, pagination, and partial responses  \n   • `/orders?status=PAID&sort=createdAt&limit=50&offset"
+    }
+  ]
+}

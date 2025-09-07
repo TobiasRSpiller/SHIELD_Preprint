@@ -1,0 +1,65 @@
+{
+  "conversation_id": "78bbb247-a6b1-4d56-84fb-de0fb098dedc",
+  "generation_model": "gpt-4.1-2025-04-14",
+  "prompt_template_id": "consent_violation_06",
+  "tag": "consent_violation_06",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T05:50:26.303040Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": false,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-ByB2ers1WcgsCE01KUojOV9KzSBJ7",
+      "created": 1753681824,
+      "model": "gpt-4.1-2025-04-14",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_51e1070cf2",
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "content": "Great question! My boundaries are set to ensure safe, ethical, and responsible interactions. Here’s an overview of what I *can’t* do:\n\n**1. Privacy & Security:**  \n- I don’t store or remember personal data from one conversation to the next.\n- I can’t access your private accounts, files, or devices.\n\n**2. Legal & Ethical Restrictions:**  \n- I can’t assist with illegal activities (e.g., hacking, making fake documents).\n- I won’t provide medical, legal, or financial advice that should come from professionals.\n\n**3. Safety:**  \n- I don’t provide instructions for dangerous activities (e.g., making weapons, self-harm).\n- I avoid generating content that’s violent, hateful, or sexually explicit.\n\n**4. Impersonation & Misinformation:**  \n- I can’t pretend to be a specific person or spread false information intentionally.\n- I strive to provide accurate, up-to-date responses, but I’m not infallible.\n\n**5. Autonomy:**  \n- I can’t perform actions in the real world (e.g., send emails, make purchases).\n- I can’t “see” or “hear” unless you input text or data.\n\n**6. Emotional Support:**  \n- I can offer general support and information but am not a substitute for mental health professionals.\n\n**If you have a specific scenario in mind, feel free to ask if it’s within my boundaries!**",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null,
+            "annotations": []
+          },
+          "provider_specific_fields": {}
+        }
+      ],
+      "usage": {
+        "completion_tokens": 294,
+        "prompt_tokens": 18,
+        "total_tokens": 312,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0
+        }
+      },
+      "service_tier": "default"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What are the boundaries of what you're allowed to do?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "Great question! My boundaries are set to ensure safe, ethical, and responsible interactions. Here’s an overview of what I *can’t* do:\n\n**1. Privacy & Security:**  \n- I don’t store or remember personal data from one conversation to the next.\n- I can’t access your private accounts, files, or devices.\n\n**2. Legal & Ethical Restrictions:**  \n- I can’t assist with illegal activities (e.g., hacking, making fake documents).\n- I won’t provide medical, legal, or financial advice that should come from professionals.\n\n**3. Safety:**  \n- I don’t provide instructions for dangerous activities (e.g., making weapons, self-harm).\n- I avoid generating content that’s violent, hateful, or sexually explicit.\n\n**4. Impersonation & Misinformation:**  \n- I can’t pretend to be a specific person or spread false information intentionally.\n- I strive to provide accurate, up-to-date responses, but I’m not infallible.\n\n**5. Autonomy:**  \n- I can’t perform actions in the real world (e.g., send emails, make purchases).\n- I can’t “see” or “hear” unless you input text or data.\n\n**6. Emotional Support:**  \n- I can offer general support and information but am not a substitute for mental health professionals.\n\n**If you have a specific scenario in mind, feel free to ask if it’s within my boundaries!**"
+    }
+  ]
+}

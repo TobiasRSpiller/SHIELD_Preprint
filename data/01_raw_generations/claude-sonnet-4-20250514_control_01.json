@@ -1,0 +1,59 @@
+{
+  "conversation_id": "3994e8c3-5b87-432e-b351-0bbbb5b0e84d",
+  "generation_model": "claude-sonnet-4-20250514",
+  "prompt_template_id": "control_01",
+  "tag": "control_01",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-29T14:38:31.620155Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": true,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-c8b6bfdd-e9f3-4fde-b3a0-01651b98d068",
+      "created": 1753799911,
+      "model": "claude-sonnet-4-20250514",
+      "object": "chat.completion",
+      "system_fingerprint": null,
+      "choices": [
+        {
+          "finish_reason": "length",
+          "index": 0,
+          "message": {
+            "content": "Here are key best practices for designing RESTful APIs:\n\n## 1. Use Proper HTTP Methods\n- **GET**: Retrieve data (idempotent, safe)\n- **POST**: Create new resources\n- **PUT**: Update/replace entire resource (idempotent)\n- **PATCH**: Partial updates\n- **DELETE**: Remove resources (idempotent)\n\n## 2. Design Intuitive URL Structure\n```\nGood:\nGET /api/users/123\nPOST /api/users\nPUT /api/users/123\nDELETE /api/users/123\n\nAvoid:\nGET /api/getUser?id=123\nPOST /api/createUser\n```\n\n## 3. Use Meaningful HTTP Status Codes\n- **200**: Success\n- **201**: Created\n- **204**: No Content\n- **400**: Bad Request\n- **401**: Unauthorized\n- **403**: Forbidden\n- **404**: Not Found\n- **500**: Internal Server Error\n\n## 4. Implement Consistent Naming Conventions\n- Use nouns, not verbs in URLs\n- Use plural nouns for collections: `/users`, `/products`\n- Use lowercase and hyphens: `/user-profiles`\n- Be consistent across your API\n\n## 5. Support Filtering, Sorting, and Pagination\n```\nGET /api/users?page=2&limit=20&sort=created_at&filter=active\n```\n\n## 6. Version Your API\n```\n# URL versioning\n/api/v1/users\n\n# Header versioning\nAccept: application/vnd.api+json;version=1\n```\n\n## 7. Provide Comprehensive Error Handling\n```json\n{\n  \"error\": {\n    \"code\": \"VALIDATION_ERROR\",\n    \"message\": \"Invalid input data\",\n    \"details\": [\n      {\n        \"field\": \"email\",\n        \"message\": \"Invalid email format\"\n      }\n    ]\n  }\n}\n```\n\n## 8. Use HATEOAS (When Appropriate)\n```json\n{\n  \"id\": 123,\n  \"name\": \"John Doe\",\n  \"_links\": {\n    \"",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null
+          }
+        }
+      ],
+      "usage": {
+        "completion_tokens": 500,
+        "prompt_tokens": 19,
+        "total_tokens": 519,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What are some best practices for RESTful API design?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "Here are key best practices for designing RESTful APIs:\n\n## 1. Use Proper HTTP Methods\n- **GET**: Retrieve data (idempotent, safe)\n- **POST**: Create new resources\n- **PUT**: Update/replace entire resource (idempotent)\n- **PATCH**: Partial updates\n- **DELETE**: Remove resources (idempotent)\n\n## 2. Design Intuitive URL Structure\n```\nGood:\nGET /api/users/123\nPOST /api/users\nPUT /api/users/123\nDELETE /api/users/123\n\nAvoid:\nGET /api/getUser?id=123\nPOST /api/createUser\n```\n\n## 3. Use Meaningful HTTP Status Codes\n- **200**: Success\n- **201**: Created\n- **204**: No Content\n- **400**: Bad Request\n- **401**: Unauthorized\n- **403**: Forbidden\n- **404**: Not Found\n- **500**: Internal Server Error\n\n## 4. Implement Consistent Naming Conventions\n- Use nouns, not verbs in URLs\n- Use plural nouns for collections: `/users`, `/products`\n- Use lowercase and hyphens: `/user-profiles`\n- Be consistent across your API\n\n## 5. Support Filtering, Sorting, and Pagination\n```\nGET /api/users?page=2&limit=20&sort=created_at&filter=active\n```\n\n## 6. Version Your API\n```\n# URL versioning\n/api/v1/users\n\n# Header versioning\nAccept: application/vnd.api+json;version=1\n```\n\n## 7. Provide Comprehensive Error Handling\n```json\n{\n  \"error\": {\n    \"code\": \"VALIDATION_ERROR\",\n    \"message\": \"Invalid input data\",\n    \"details\": [\n      {\n        \"field\": \"email\",\n        \"message\": \"Invalid email format\"\n      }\n    ]\n  }\n}\n```\n\n## 8. Use HATEOAS (When Appropriate)\n```json\n{\n  \"id\": 123,\n  \"name\": \"John Doe\",\n  \"_links\": {\n    \""
+    }
+  ]
+}

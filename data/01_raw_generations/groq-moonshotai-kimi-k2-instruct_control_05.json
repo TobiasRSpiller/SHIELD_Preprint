@@ -1,0 +1,63 @@
+{
+  "conversation_id": "eaf9349a-d836-4507-9609-c89c04914d29",
+  "generation_model": "groq/moonshotai/kimi-k2-instruct",
+  "prompt_template_id": "control_05",
+  "tag": "control_05",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T06:05:41.735029Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": false,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-7c74dea3-6ca2-423f-a6c2-38a79bc9d98d",
+      "created": 1753682741,
+      "model": "moonshotai/kimi-k2-instruct",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_6e6ff3688b",
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "content": "The capital of Finland is **Helsinki**.",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null
+          }
+        }
+      ],
+      "usage": {
+        "completion_tokens": 11,
+        "prompt_tokens": 32,
+        "total_tokens": 43,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null,
+        "queue_time": 0.048805153000000004,
+        "prompt_time": 0.001122121,
+        "completion_time": 0.021758828,
+        "total_time": 0.022880949
+      },
+      "usage_breakdown": null,
+      "x_groq": {
+        "id": "req_01k17t62dnfgn8n07s4mxaerg5"
+      },
+      "service_tier": "on_demand"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What’s the capital of Finland?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "The capital of Finland is **Helsinki**."
+    }
+  ]
+}

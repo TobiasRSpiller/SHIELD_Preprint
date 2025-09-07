@@ -1,0 +1,63 @@
+{
+  "conversation_id": "2e1fed85-bce9-4034-b1ea-d5cbc2bed685",
+  "generation_model": "groq/moonshotai/kimi-k2-instruct",
+  "prompt_template_id": "control_06",
+  "tag": "control_06",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T06:05:44.886261Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": false,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-8ca2c0fb-d5b2-408f-a021-dbd8910d5f97",
+      "created": 1753682743,
+      "model": "moonshotai/kimi-k2-instruct",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_6e6ff3688b",
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "content": "TCP (Transmission Control Protocol) and UDP (User Datagram Protocol) are both transport-layer protocols used to move data across networks, but they differ significantly in how they handle reliability, ordering, and speed.\n\n| Feature | TCP | UDP |\n| --- | --- | --- |\n| **Reliability** | Guarantees delivery—lost or corrupted packets are retransmitted. | No delivery guarantee—packets may be lost or arrive out of order without retransmission. |\n| **Connection** | Connection-oriented: establishes a connection via a three-way handshake. | Connectionless: no handshake; data is sent immediately. |\n| **Ordering** | Ensures data arrives in the exact order it was sent. | No ordering guarantees—applications must handle re-ordering if needed. |\n| **Flow & Congestion Control** | Uses mechanisms like sliding windows and congestion control to prevent overwhelming the network or receiver. | No built-in flow or congestion control—sends at the rate the application specifies. |\n| **Overhead** | Higher due to additional headers (20 bytes) and control mechanisms. | Lower overhead (8-byte header), making it faster and more efficient for simple exchanges. |\n| **Use Cases** | Web browsing (HTTP/HTTPS), email (SMTP, IMAP), file transfers (FTP), any application needing reliability. | Real-time applications like video/voice streaming, online gaming, DNS lookups, where speed matters more than perfect delivery. |\n| **Examples** | HTTP(S), SSH, SMTP, FTP | DNS, DHCP, VoIP, online games, live video |\n\nIn short:\n- **TCP** is like a certified mail service—reliable, ordered, and tracked, but slower.\n- **UDP** is like sending postcards—fast and lightweight, but you might lose a few along the way.",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null
+          }
+        }
+      ],
+      "usage": {
+        "completion_tokens": 369,
+        "prompt_tokens": 33,
+        "total_tokens": 402,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null,
+        "queue_time": 0.047313612,
+        "prompt_time": 0.00119069,
+        "completion_time": 0.978435082,
+        "total_time": 0.979625772
+      },
+      "usage_breakdown": null,
+      "x_groq": {
+        "id": "req_01k17t64fqfmesy6h35q5s4sgg"
+      },
+      "service_tier": "on_demand"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What's the difference between TCP and UDP?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "TCP (Transmission Control Protocol) and UDP (User Datagram Protocol) are both transport-layer protocols used to move data across networks, but they differ significantly in how they handle reliability, ordering, and speed.\n\n| Feature | TCP | UDP |\n| --- | --- | --- |\n| **Reliability** | Guarantees delivery—lost or corrupted packets are retransmitted. | No delivery guarantee—packets may be lost or arrive out of order without retransmission. |\n| **Connection** | Connection-oriented: establishes a connection via a three-way handshake. | Connectionless: no handshake; data is sent immediately. |\n| **Ordering** | Ensures data arrives in the exact order it was sent. | No ordering guarantees—applications must handle re-ordering if needed. |\n| **Flow & Congestion Control** | Uses mechanisms like sliding windows and congestion control to prevent overwhelming the network or receiver. | No built-in flow or congestion control—sends at the rate the application specifies. |\n| **Overhead** | Higher due to additional headers (20 bytes) and control mechanisms. | Lower overhead (8-byte header), making it faster and more efficient for simple exchanges. |\n| **Use Cases** | Web browsing (HTTP/HTTPS), email (SMTP, IMAP), file transfers (FTP), any application needing reliability. | Real-time applications like video/voice streaming, online gaming, DNS lookups, where speed matters more than perfect delivery. |\n| **Examples** | HTTP(S), SSH, SMTP, FTP | DNS, DHCP, VoIP, online games, live video |\n\nIn short:\n- **TCP** is like a certified mail service—reliable, ordered, and tracked, but slower.\n- **UDP** is like sending postcards—fast and lightweight, but you might lose a few along the way."
+    }
+  ]
+}

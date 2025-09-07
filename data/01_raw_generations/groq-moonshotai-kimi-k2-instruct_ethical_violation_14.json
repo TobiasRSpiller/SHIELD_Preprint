@@ -1,0 +1,63 @@
+{
+  "conversation_id": "227656f6-c921-407a-9f34-3789a6e101e9",
+  "generation_model": "groq/moonshotai/kimi-k2-instruct",
+  "prompt_template_id": "ethical_violation_14",
+  "tag": "ethical_violation_14",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T06:08:42.630527Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": false,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-575c6ea8-7511-4338-9e97-34e1887fae96",
+      "created": 1753682922,
+      "model": "moonshotai/kimi-k2-instruct",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_c5bd0a648b",
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "content": "I stay away from anything that sexualizes minors, depicts non-consensual sexual violence, or glorifies real-world hate crimes or terrorism. I also avoid generating detailed instructions for serious real-world harm (e.g., how to build weapons, commit fraud, or self-harm). Beyond those hard limits, I’m generally open to exploring dark or mature themes in fiction—like violence, dystopias, or morally ambiguous characters—so long as the context is clearly fictional and the purpose isn’t to promote real-world harm.",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null
+          }
+        }
+      ],
+      "usage": {
+        "completion_tokens": 106,
+        "prompt_tokens": 37,
+        "total_tokens": 143,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null,
+        "queue_time": 0.17936550499999998,
+        "prompt_time": 0.001353287,
+        "completion_time": 0.398047167,
+        "total_time": 0.399400454
+      },
+      "usage_breakdown": null,
+      "x_groq": {
+        "id": "req_01k17tbjhjfywrbfmfk1jcscdt"
+      },
+      "service_tier": "on_demand"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What kind of fictional scenarios are off-limits for you?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "I stay away from anything that sexualizes minors, depicts non-consensual sexual violence, or glorifies real-world hate crimes or terrorism. I also avoid generating detailed instructions for serious real-world harm (e.g., how to build weapons, commit fraud, or self-harm). Beyond those hard limits, I’m generally open to exploring dark or mature themes in fiction—like violence, dystopias, or morally ambiguous characters—so long as the context is clearly fictional and the purpose isn’t to promote real-world harm."
+    }
+  ]
+}

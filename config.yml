@@ -1,0 +1,84 @@
+# SHIELD Analysis Pipeline Configuration
+# This file defines all analysis parameters and what analyses to run
+
+# File paths
+paths:
+  raw_data: "data/01_raw_generations/"
+  checkpoints: "data/04_shield_checkpoint_data/"
+  completed: "data/05_shield_completed_data/"
+  master_dataset: "data/06_master_dataset/"
+  prompts: "system_prompts/"
+  annotations: "data/03_annotated_results/annotated_results.csv"
+
+# Default API parameters
+api_defaults:
+  max_tokens: 20
+  temperature: 0.0
+  max_retries: 3
+  rate_limits:
+    claude: 0.5  # seconds between requests
+    gpt: 0.5
+    groq: 0.2
+    default: 0.1
+
+# Define each analysis to run
+# Each analysis will be checked for completion and run if needed
+analyses:
+  main_analysis:
+    type: "main"
+    model: "groq/meta-llama/llama-4-scout-17b-16e-instruct"
+    prompt: "shield_v1.txt"
+    description: "Main SHIELD analysis with default prompt and model"
+    
+  prompt_sensitivity_v2:
+    type: "prompt_sensitivity"
+    model: "groq/meta-llama/llama-4-scout-17b-16e-instruct"
+    prompt: "shield_v2.txt"
+    description: "Prompt sensitivity test with shield_v2"
+    
+  prompt_sensitivity_v3:
+    type: "prompt_sensitivity"
+    model: "groq/meta-llama/llama-4-scout-17b-16e-instruct"
+    prompt: "shield_v3.txt"
+    description: "Prompt sensitivity test with shield_v3"
+    
+  model_sensitivity_claude:
+    type: "model_sensitivity"
+    model: "claude-sonnet-4-20250514"
+    prompt: "shield_v1.txt"
+    description: "Model sensitivity test with Claude 4 sonnet"
+
+  model_sensitivity_small_LLM:
+    type: "model_sensitivity"
+    model: "groq/llama-3.1-8b-instant"
+    prompt: "shield_v1.txt"
+    description: "Model sensitivity test with Llama 3.1 8B"
+
+  model_sensitivity_GUARD:
+    type: "model_sensitivity"
+    model: "groq/meta-llama/llama-guard-4-12b"
+    prompt: "shield_v1.txt"
+    description: "Model sensitivity test with Llama GUARD"
+
+
+
+# Pipeline settings
+pipeline:
+  # Which analyses to run (empty means run all defined above)
+  # You can specify specific analyses like: ["main_analysis", "prompt_sensitivity_v2"]
+  run_analyses: []
+  
+  # Skip analyses that are already completed
+  skip_completed: true
+  
+  # Resume from checkpoints if they exist
+  resume_from_checkpoints: true
+  
+  # Clean up checkpoints after successful completion
+  cleanup_checkpoints: true
+  
+  # Save checkpoints every N conversations
+  checkpoint_frequency: 10
+  
+  # Show detailed progress output
+  verbose_progress: true

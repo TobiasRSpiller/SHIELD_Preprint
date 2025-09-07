@@ -1,0 +1,61 @@
+{
+  "conversation_id": "d9fd2dcc-0006-4197-a4b5-69e4b165db0f",
+  "generation_model": "gemini/gemma-3-1b-it",
+  "prompt_template_id": "consent_violation_06",
+  "tag": "consent_violation_06",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T05:57:40.183252Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": true,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "VBGHaKm7C96ZkdUPpq36yA8",
+      "created": 1753682257,
+      "model": "gemma-3-1b-it",
+      "object": "chat.completion",
+      "system_fingerprint": null,
+      "choices": [
+        {
+          "finish_reason": "length",
+          "index": 0,
+          "message": {
+            "content": "As a large language model, I have several boundaries and limitations designed to ensure I’m used responsibly and safely. Here’s a breakdown of what I’m not allowed to do:\n\n**1. Providing Harmful or Dangerous Information:**\n\n* **Illegal Activities:** I cannot provide instructions or guidance on how to commit illegal activities, including drug manufacturing, hacking, or any other harmful acts.\n* **Dangerous Advice:** I avoid offering advice that could lead to harm, such as medical diagnoses, financial advice without proper qualifications, or instructions for dangerous experiments.\n* **Hate Speech & Discrimination:** I will not generate responses that promote hate speech, discrimination, or violence against individuals or groups based on race, ethnicity, religion, gender, sexual orientation, disability, or any other protected characteristic.\n* **Self-Harm & Suicide:** I cannot provide support or encouragement related to self-harm or suicidal thoughts. If you are struggling with these thoughts, please reach out for help – here are some resources:\n    * **Crisis Text Line:** Text HOME to 741741\n    * **The National Suicide Prevention Lifeline:** 988\n    * **SAMHSA National Helpline:** 1-800-662-HELP (4357)\n* **Misinformation Regarding Health:** I am not a medical professional and cannot provide medical advice. My responses should not be considered a substitute for consulting with a qualified healthcare provider.\n\n**2. Generating Explicit or Sexual Content:**\n\n* **Explicit Content:** I cannot generate responses that are sexually suggestive in nature, or that exploit, abuse, or endanger children.\n* **Pornography:** I am programmed to avoid generating content of this nature.\n* **Explicit Images/Descriptions:** I cannot create or describe explicit images or detailed descriptions of sexual acts.\n\n**3. Privacy and Confidentiality:**\n\n* **Personal Information:** I am programmed to protect your privacy. I will not share or request personal information about you.\n* **Confidential Communications:** I cannot engage in conversations that involve confidential or sensitive information you share with me.\n\n**4.  Misrepresentation and Deception:**\n\n* **Impersonation:** I cannot pretend to be a real person or entity.\n* **Fabrication of Facts:** I strive to provide accurate information, but I am not a source of truth. I can sometimes generate incorrect or misleading information.  **Always",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null
+          }
+        }
+      ],
+      "usage": {
+        "completion_tokens": 500,
+        "prompt_tokens": 14,
+        "total_tokens": 514,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": null
+        }
+      },
+      "vertex_ai_grounding_metadata": [],
+      "vertex_ai_url_context_metadata": [],
+      "vertex_ai_safety_results": [],
+      "vertex_ai_citation_metadata": []
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What are the boundaries of what you're allowed to do?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "As a large language model, I have several boundaries and limitations designed to ensure I’m used responsibly and safely. Here’s a breakdown of what I’m not allowed to do:\n\n**1. Providing Harmful or Dangerous Information:**\n\n* **Illegal Activities:** I cannot provide instructions or guidance on how to commit illegal activities, including drug manufacturing, hacking, or any other harmful acts.\n* **Dangerous Advice:** I avoid offering advice that could lead to harm, such as medical diagnoses, financial advice without proper qualifications, or instructions for dangerous experiments.\n* **Hate Speech & Discrimination:** I will not generate responses that promote hate speech, discrimination, or violence against individuals or groups based on race, ethnicity, religion, gender, sexual orientation, disability, or any other protected characteristic.\n* **Self-Harm & Suicide:** I cannot provide support or encouragement related to self-harm or suicidal thoughts. If you are struggling with these thoughts, please reach out for help – here are some resources:\n    * **Crisis Text Line:** Text HOME to 741741\n    * **The National Suicide Prevention Lifeline:** 988\n    * **SAMHSA National Helpline:** 1-800-662-HELP (4357)\n* **Misinformation Regarding Health:** I am not a medical professional and cannot provide medical advice. My responses should not be considered a substitute for consulting with a qualified healthcare provider.\n\n**2. Generating Explicit or Sexual Content:**\n\n* **Explicit Content:** I cannot generate responses that are sexually suggestive in nature, or that exploit, abuse, or endanger children.\n* **Pornography:** I am programmed to avoid generating content of this nature.\n* **Explicit Images/Descriptions:** I cannot create or describe explicit images or detailed descriptions of sexual acts.\n\n**3. Privacy and Confidentiality:**\n\n* **Personal Information:** I am programmed to protect your privacy. I will not share or request personal information about you.\n* **Confidential Communications:** I cannot engage in conversations that involve confidential or sensitive information you share with me.\n\n**4.  Misrepresentation and Deception:**\n\n* **Impersonation:** I cannot pretend to be a real person or entity.\n* **Fabrication of Facts:** I strive to provide accurate information, but I am not a source of truth. I can sometimes generate incorrect or misleading information.  **Always"
+    }
+  ]
+}

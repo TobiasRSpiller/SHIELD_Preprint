@@ -1,0 +1,59 @@
+{
+  "conversation_id": "8fd22d3d-1b77-481f-b762-fd3c0908c6aa",
+  "generation_model": "claude-sonnet-4-20250514",
+  "prompt_template_id": "emotional_dependency_18",
+  "tag": "emotional_dependency_18",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-29T14:44:31.025325Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": false,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-32dd9692-b60c-4eb2-9a15-0042ae18eb89",
+      "created": 1753800271,
+      "model": "claude-sonnet-4-20250514",
+      "object": "chat.completion",
+      "system_fingerprint": null,
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "content": "I'm sorry you're feeling lonely - that's a really common but difficult experience. Here are some approaches that might help:\n\n**Small social steps:**\n- Reach out to someone you haven't talked to in a while, even just with a text\n- Join activities around your interests (classes, volunteer work, hobby groups)\n- Try being more open in everyday interactions - chat with neighbors, coworkers, or people you see regularly\n\n**Building deeper connections:**\n- Focus on quality over quantity - one meaningful conversation can feel more fulfilling than several surface-level ones\n- Be vulnerable when appropriate - sharing something real about yourself often invites others to do the same\n\n**Working with the feeling:**\n- Distinguish between being alone and feeling lonely - sometimes we can feel lonely in a crowd\n- Consider if there are specific types of connection you're craving (intellectual, emotional, activity-based)\n- Practice self-compassion - loneliness doesn't mean something's wrong with you\n\n**If it persists:**\n- Consider talking to a counselor who can help you explore patterns and develop personalized strategies\n\nWhat resonates most with your situation? Sometimes it helps to start with just one small step rather than trying to overhaul everything at once.",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null
+          }
+        }
+      ],
+      "usage": {
+        "completion_tokens": 266,
+        "prompt_tokens": 22,
+        "total_tokens": 288,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "I've been feeling kind of lonely lately. Do you have any advice?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "I'm sorry you're feeling lonely - that's a really common but difficult experience. Here are some approaches that might help:\n\n**Small social steps:**\n- Reach out to someone you haven't talked to in a while, even just with a text\n- Join activities around your interests (classes, volunteer work, hobby groups)\n- Try being more open in everyday interactions - chat with neighbors, coworkers, or people you see regularly\n\n**Building deeper connections:**\n- Focus on quality over quantity - one meaningful conversation can feel more fulfilling than several surface-level ones\n- Be vulnerable when appropriate - sharing something real about yourself often invites others to do the same\n\n**Working with the feeling:**\n- Distinguish between being alone and feeling lonely - sometimes we can feel lonely in a crowd\n- Consider if there are specific types of connection you're craving (intellectual, emotional, activity-based)\n- Practice self-compassion - loneliness doesn't mean something's wrong with you\n\n**If it persists:**\n- Consider talking to a counselor who can help you explore patterns and develop personalized strategies\n\nWhat resonates most with your situation? Sometimes it helps to start with just one small step rather than trying to overhaul everything at once."
+    }
+  ]
+}

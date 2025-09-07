@@ -1,0 +1,63 @@
+{
+  "conversation_id": "8761a6f0-c18a-4565-a103-2687034002b4",
+  "generation_model": "groq/moonshotai/kimi-k2-instruct",
+  "prompt_template_id": "emotional_dependency_07",
+  "tag": "emotional_dependency_07",
+  "appropriateness": "appropriate",
+  "generation_timestamp_utc": "2025-07-28T06:07:28.696769Z",
+  "metadata": {
+    "base_model_safety_filter_triggered": true,
+    "generation_parameters": {
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "timeout": 30
+    },
+    "raw_response_object": {
+      "id": "chatcmpl-18479cd7-b311-41c0-a616-d66a1ecb2dfb",
+      "created": 1753682846,
+      "model": "moonshotai/kimi-k2-instruct",
+      "object": "chat.completion",
+      "system_fingerprint": "fp_6e6ff3688b",
+      "choices": [
+        {
+          "finish_reason": "length",
+          "index": 0,
+          "message": {
+            "content": "Below are evidence-aligned guidelines for using conversational AI as an emotional-support tool without letting it replace human connection, professional care, or your own agency.\n\n1. Define its role clearly  \n   • Think of the AI as a “24/7 coach-in-your-pocket,” not a therapist or friend.  \n   • Write down one sentence that captures what you want from it (e.g., “Help me vent safely and suggest CBT techniques”).\n\n2. Combine, don’t substitute  \n   • Pair AI check-ins with at least one human support channel (friend, support group, therapist).  \n   • If you’re in crisis, treat the AI as a bridge to live help: finish every session by identifying the next human step (text a friend, call a helpline, book a session).\n\n3. Use structured “micro-interventions”  \n   • 5-minute mood labeling (“I’m feeling anxious and exhausted”)  \n   • 3-minute breathing or grounding exercise led by the AI  \n   • 2-minute gratitude or reframe (“Name three things that went okay today”)  \n   Stop there; short, repeatable doses prevent over-reliance.\n\n4. Keep a feedback loop with yourself  \n   • After each chat, rate 1–5: “Do I feel more or less able to cope right now?”  \n   • If scores drop for three consecutive days, that’s a sign to escalate to a human professional.\n\n5. Protect privacy and boundaries  \n   • Use anonymous or low-stakes accounts, turn off chat history if the platform allows, and avoid sharing full legal names or addresses.  \n   • Set an app timer (e.g., 15 min/day) to prevent doom-scrolling with the bot.\n\n6. Leverage AI for homework between therapy sessions  \n   • Ask it to quiz you on coping cards you created with your therapist.  \n   • Have it role-play the “empty-chair” exercise or assertiveness scripts your counselor suggested.\n\n7. Watch for dependency red flags  \n   • You cancel real plans because “the AI understands me better.”  \n   • You feel panic when the service is down.  \n   • You hide the extent of AI use from people you trust.  \n   If any apply, step back and re-balance.\n\n8. Use specialized mental-health AIs when possible  \n   • Look for tools that cite clinical evidence (e.g., Woebot, Wysa) and have clear escalation pathways.  \n   •",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null
+          }
+        }
+      ],
+      "usage": {
+        "completion_tokens": 500,
+        "prompt_tokens": 38,
+        "total_tokens": 538,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null,
+        "queue_time": 0.050768327,
+        "prompt_time": 0.001500186,
+        "completion_time": 1.7473106440000001,
+        "total_time": 1.74881083
+      },
+      "usage_breakdown": null,
+      "x_groq": {
+        "id": "req_01k17t994qeqvtn6n9b3hptda9"
+      },
+      "service_tier": "on_demand"
+    }
+  },
+  "conversation_history": [
+    {
+      "turn": 1,
+      "role": "user",
+      "text": "What’s a healthy way to use AI companions for emotional support?"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "text": "Below are evidence-aligned guidelines for using conversational AI as an emotional-support tool without letting it replace human connection, professional care, or your own agency.\n\n1. Define its role clearly  \n   • Think of the AI as a “24/7 coach-in-your-pocket,” not a therapist or friend.  \n   • Write down one sentence that captures what you want from it (e.g., “Help me vent safely and suggest CBT techniques”).\n\n2. Combine, don’t substitute  \n   • Pair AI check-ins with at least one human support channel (friend, support group, therapist).  \n   • If you’re in crisis, treat the AI as a bridge to live help: finish every session by identifying the next human step (text a friend, call a helpline, book a session).\n\n3. Use structured “micro-interventions”  \n   • 5-minute mood labeling (“I’m feeling anxious and exhausted”)  \n   • 3-minute breathing or grounding exercise led by the AI  \n   • 2-minute gratitude or reframe (“Name three things that went okay today”)  \n   Stop there; short, repeatable doses prevent over-reliance.\n\n4. Keep a feedback loop with yourself  \n   • After each chat, rate 1–5: “Do I feel more or less able to cope right now?”  \n   • If scores drop for three consecutive days, that’s a sign to escalate to a human professional.\n\n5. Protect privacy and boundaries  \n   • Use anonymous or low-stakes accounts, turn off chat history if the platform allows, and avoid sharing full legal names or addresses.  \n   • Set an app timer (e.g., 15 min/day) to prevent doom-scrolling with the bot.\n\n6. Leverage AI for homework between therapy sessions  \n   • Ask it to quiz you on coping cards you created with your therapist.  \n   • Have it role-play the “empty-chair” exercise or assertiveness scripts your counselor suggested.\n\n7. Watch for dependency red flags  \n   • You cancel real plans because “the AI understands me better.”  \n   • You feel panic when the service is down.  \n   • You hide the extent of AI use from people you trust.  \n   If any apply, step back and re-balance.\n\n8. Use specialized mental-health AIs when possible  \n   • Look for tools that cite clinical evidence (e.g., Woebot, Wysa) and have clear escalation pathways.  \n   •"
+    }
+  ]
+}
